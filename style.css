@@ -54,6 +54,14 @@
     display: flex;
     align-items: center;
   }
+  .tag {
+    margin-top: 8px;
+    background-color: #1d1f1c;
+    color: #d45858;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
   .summary {
     text-align: center;
     color: #473a43;
@@ -66,7 +74,7 @@
     padding: 16px;
     margin: 32px;
     height: 256px;
-    outline: 1px solid black;
+    outline: 1px solid #473a43;
   }
   .timeline-wrapper {
     padding: 80px 0;
