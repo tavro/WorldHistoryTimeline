@@ -54,10 +54,24 @@
     display: flex;
     align-items: center;
   }
+  .info-boxes {
+    display: inline-block;
+  }
+  .info-box {
+    outline: 1px solid #473a43;
+    background-color: #c2bfad;
+    margin-top: 8px;
+    margin-right: 8px;
+    padding: 8px;
+    height: 256px;
+    width: auto;
+    float: left;
+  }
   .tag {
     margin-top: 8px;
     background-color: #1d1f1c;
     color: #d45858;
+    display: inline-block;
     border-radius: 4px;
     padding-left: 8px;
     padding-right: 8px;
@@ -73,7 +87,6 @@
   .category {
     padding: 16px;
     margin: 32px;
-    height: 256px;
     outline: 1px solid #473a43;
   }
   .timeline-wrapper {
