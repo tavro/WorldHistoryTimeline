@@ -23,9 +23,11 @@ every kind of contribution is highly appreciated no matter how small or big.
 * design and user experience improvements
 * add important people under each year from 1 up until 2022
 * make it possible to navigate backwords on the timeline when you've entered a century/decade/year
+* add attributes to people, example: title, country, known for and so on
 
 ## ideas :bulb:
 * add CMS to make the contribution process easier
+* group people by region, relations and so on
 
 ## bugs & cons :warning:
 * unknown at this point
