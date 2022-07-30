@@ -27,6 +27,8 @@ every kind of contribution is highly appreciated no matter how small or big.
 
 ## ideas :bulb:
 * add CMS to make the contribution process easier
+    * add markup language to easily format text
+    * alternatively use server side html and includes
 * group people by region, relations and so on
 
 ## bugs & cons :warning:
