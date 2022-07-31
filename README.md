@@ -40,5 +40,7 @@ every kind of contribution is highly appreciated no matter how small or big.
 
 * group people by region, relations and so on
 
+* upgrade to newer web technology that has support for components
+
 ## bugs & cons :warning:
 * unknown at this point
