@@ -24,6 +24,7 @@ every kind of contribution is highly appreciated no matter how small or big.
 * add important people under each year from 1 up until 2022
 * make it possible to navigate backwords on the timeline when you've entered a century/decade/year
 * add attributes to people, example: title, country, known for and so on
+* fix the footer section 'made by Isak...', it looks weird on phone-resolutions
 
 ## ideas :bulb:
 * add CMS to make the contribution process easier
