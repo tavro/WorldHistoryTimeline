@@ -36,7 +36,7 @@ every kind of contribution is highly appreciated no matter how small or big.
 
     example on includes:
     ```
-    <include src="./[century]-summary.html"></include>
+    <div w3-include-HTML="./[century]-summary.html"></div>
     ```
 
 * group people by region, relations and so on
