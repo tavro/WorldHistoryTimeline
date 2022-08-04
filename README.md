@@ -30,12 +30,9 @@ be fairly easy to understand and edit.
 * I know that someone very special will be on this list soon
 
 ## todo :clipboard:
-* write summary for every century and decade from year 0 up to 2020
 * design and user experience improvements
-* add important people under each year from 1 up until 2022
-* make it possible to navigate backwords on the timeline when you've entered a century/decade/year
-* add attributes to people, example: title, country, known for and so on
-* fix the footer section 'made by Isak...', it looks weird on phone-resolutions
+
+the rest is made into issues and moved to this [board](https://github.com/users/tavro/projects/2/views/1)
 
 ## ideas :bulb:
 * add CMS to make the contribution process easier
