@@ -43,6 +43,11 @@
     line-height: 26px;
     margin: 0;
   }
+  .wrapper {
+    padding-top: 64px;
+    margin: auto;
+    width: 50%;
+  }
   .container {
     width: 100%;
     max-width: 1140px;
