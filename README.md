@@ -27,7 +27,8 @@ be fairly easy to understand and edit.
 * will be expanded if needed.
 
 ## contributions :trophy:
-* I know that someone very special will be on this list soon
+* [Lolle Dalbo](https://github.com/Skaparen)
+    * added summary for the 50's
 
 ## todo :clipboard:
 * design and user experience improvements
