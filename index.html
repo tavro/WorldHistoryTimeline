@@ -5,35 +5,7 @@
         <title>World History Timeline</title>
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link rel="stylesheet" href="style.css">
-<script>
-function includeHTML() {
-  var z, i, elmnt, file, xhttp;
-  /* Loop through a collection of all HTML elements: */
-  z = document.getElementsByTagName("*");
-  for (i = 0; i < z.length; i++) {
-    elmnt = z[i];
-    /*search for elements with a certain atrribute:*/
-    file = elmnt.getAttribute("w3-include-html");
-    if (file) {
-      /* Make an HTTP request using the attribute value as the file name: */
-      xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4) {
-          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-          /* Remove the attribute, and call this function once more: */
-          elmnt.removeAttribute("w3-include-html");
-          includeHTML();
-        }
-      }
-      xhttp.open("GET", file, true);
-      xhttp.send();
-      /* Exit the function: */
-      return;
-    }
-  }
-}
-</script>
+        <script src="include.js"></script> 
     </head>
     <body>
         <div class="timeline-wrapper">
@@ -61,7 +33,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/100-summary.html"></div>
+                            <div include-HTML="./summaries/100-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -69,7 +41,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/200-summary.html"></div>
+                            <div include-HTML="./summaries/200-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -77,7 +49,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/300-summary.html"></div>
+                            <div include-HTML="./summaries/300-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -85,7 +57,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/400-summary.html"></div>
+                            <div include-HTML="./summaries/400-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -93,7 +65,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/500-summary.html"></div>
+                            <div include-HTML="./summaries/500-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -101,7 +73,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/600-summary.html"></div>
+                            <div include-HTML="./summaries/600-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -109,7 +81,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/700-summary.html"></div>
+                            <div include-HTML="./summaries/700-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -117,7 +89,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/800-summary.html"></div>
+                            <div include-HTML="./summaries/800-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -125,7 +97,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/900-summary.html"></div>
+                            <div include-HTML="./summaries/900-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -133,7 +105,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/1000-summary.html"></div>
+                            <div include-HTML="./summaries/1000-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -141,7 +113,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/1100-summary.html"></div>
+                            <div include-HTML="./summaries/1100-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -149,7 +121,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/1200-summary.html"></div>
+                            <div include-HTML="./summaries/1200-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -157,7 +129,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/1300-summary.html"></div>
+                            <div include-HTML="./summaries/1300-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -165,7 +137,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/1400-summary.html"></div>
+                            <div include-HTML="./summaries/1400-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -173,7 +145,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/1500-summary.html"></div>
+                            <div include-HTML="./summaries/1500-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -181,7 +153,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/1600-summary.html"></div>
+                            <div include-HTML="./summaries/1600-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -189,7 +161,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/1700-summary.html"></div>
+                            <div include-HTML="./summaries/1700-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -197,7 +169,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/1800-summary.html"></div>
+                            <div include-HTML="./summaries/1800-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -205,7 +177,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/1900-summary.html"></div>
+                            <div include-HTML="./summaries/1900-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
@@ -213,7 +185,7 @@ function includeHTML() {
                     <div class="event d-flex-2">
                         <div class="event-blank"></div>
                         <div class="event-text d-flex-2">
-                            <div w3-include-HTML="./summaries/2000-summary.html"></div>
+                            <div include-HTML="./summaries/2000-summary.html"></div>
                             <div class="event-circle"></div>
                         </div>
                     </div>
