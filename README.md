@@ -45,7 +45,7 @@ the rest is made into issues and moved to this [board](https://github.com/users/
 
     example on includes:
     ```
-    <div w3-include-HTML="./[century]-summary.html"></div>
+    <div include-HTML="./[century]-summary.html"></div>
     ```
 
 * group people by region, relations and so on
