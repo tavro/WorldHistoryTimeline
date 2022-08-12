@@ -37,6 +37,7 @@ if you want to edit a summary do the following:
 ## contributions :trophy:
 * [Lolle Dalbo](https://github.com/Skaparen)
     * added summary for the 50's
+    * made beautiful back button
 
 ## todo :clipboard:
 * design and user experience improvements
