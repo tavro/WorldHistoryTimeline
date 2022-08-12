@@ -21,6 +21,14 @@ for now the best way to contribute would be to improve and write summaries
 for all decades, you can find all summaries in the 'summaries'-folder. these should
 be fairly easy to understand and edit.
 
+#### contributing with summaries
+
+i've written a very simple [markup language](https://github.com/tavro/WHT-markup) for making the process of writing summaries a little easier.
+
+if you want to edit a summary do the following:
+  * go to [WorldHistoryTimeline/summaries/markup/](https://github.com/tavro/WorldHistoryTimeline/tree/main/summaries/markup) and find the file you want to edit
+  * follow the syntax listed in this [file](https://github.com/tavro/WHT-markup/blob/main/README.md)
+
 ### rules
 
 * **do** conform to existing coding style.
