@@ -104,8 +104,15 @@
     text-align: center;
     color: #473a43;
     font-weight: 600;
-    margin-bottom: 40px;
     font-size: 32px;
+  }
+  .back {
+    margin: auto;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .back a{
+    color: #3a682b;
   }
   .timeline-footer-title h2 {
     text-align: center;
