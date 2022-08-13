@@ -98,6 +98,7 @@
     padding: 80px 0;
   }
   .events-wrapper {
+    margin-top: 40px;
     position: relative;
   }
   .timeline-title h2 {
@@ -109,7 +110,6 @@
   .back {
     margin: auto;
     text-align: center;
-    margin-bottom: 40px;
   }
   .back a{
     color: #3a682b;
