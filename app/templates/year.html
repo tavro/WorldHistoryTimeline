@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{century}}/{{decade}}/{{year}} - World History Timeline</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link
+      rel="icon"
+      href="https://static.thenounproject.com/png/26949-200.png"
+    />
+    <script src="/static/js/string_normalizer.js" defer></script>
+  </head>
+  <body>
+    <div class="summary">
+      <h2>1</h2>
+      <p>{{year_summary}}</p>
+      <div class="back"><a href="/{{century}}/{{decade}}">go back</a></div>
+    </div>
+    <div class="categories">
+      <div class="category">
+        <h3>Important People</h3>
+        <hr />
+        <div class="info-boxes">
+          {% for person in famous_people %}
+            <div class="info-box">
+                <h4>{{person.name}}</h4>
+                <hr />
+                <img src="{{person.image}}" height="172px" width="172px" />
+                <p><b>Lifetime:</b> {{person.lifetime}}</p>
+                <p><b>Summary:</b> <span class="people_summary" id="{{person._id}}">{{person.summary}}</span></p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
