@@ -150,7 +150,9 @@ def github_callback():
         session['admin'] = user_info['admin']
 
         return redirect(url_for('contribute'))
-    except:
+    except Exception as e:
+        print(e)
+
         return redirect(url_for('authentication'))
 
 
