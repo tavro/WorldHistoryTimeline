@@ -98,7 +98,7 @@ def year(century, decade, year):
 
 
 @app.route('/authentication', methods=['GET', 'POST'])
-def autentication():
+def authentication():
     '''
     The autentication page is used to log in to the contributor mode of the website.
     '''
