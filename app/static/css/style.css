@@ -246,6 +246,58 @@ p {
   gap: 20px;
 }
 
+.authentication {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+  color: red;
+  vertical-align: baseline;
+
+}
+
+.authentication a {
+  color: #d45858;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.authentication button {
+  background-color: #1d1f1c;
+  color: #d45858;
+  display: inline-block;
+  border-radius: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.authentication button a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.authentication p {
+  color: #d45858;
+  font-size: 14px;
+  margin: 0;
+
+}
+
+.authentication svg {
+  height: 15px;
+  width: 15px;
+  fill: #FFFFFF;
+
+}
+
 @media all and (max-width: 991px) {}
 
 @media all and (max-width: 768px) {

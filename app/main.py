@@ -2,8 +2,10 @@ import os
 from dotenv import load_dotenv
 import json
 from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify, session, flash, abort
+from flask_session import Session
 import redis
 import pymongo
+import requests
 
 load_dotenv()
 
@@ -15,6 +17,18 @@ DB = MONGO_CLIENT["main"]
 
 
 app = Flask(__name__)
+
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_REDIS'] = redis.from_url(os.getenv('REDIS_URL'))
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_PERMANENT'] = True
+app.config['SESSEION_COOKIE_NAME'] = 'X-Identity'
+
+Session(app)
+
 
 if MONGO_CLIENT.admin.command('ping')['ok'] == 1:
     print("Connected to MongoDB Atlas")
@@ -59,8 +73,6 @@ def decade(century, decade):
     else:
         year_data = sorted(year_data, key=lambda k: int(k['year']))
 
-
-
     return render_template('decade.html', year_data=year_data, century=century, decade=decade)
 
 
@@ -74,7 +86,6 @@ def year(century, decade, year):
     year_summary = DB.year_data.find_one(
         {"year": str(year), "decade": str(decade), "century": str(century)})
 
-
     if famous_people is None:
         famous_people = []
 
@@ -82,8 +93,75 @@ def year(century, decade, year):
         year_summary = "No summary is currently available for this year."
     else:
         year_summary = year_summary["summary"]
-    
+
     return render_template('year.html', famous_people=famous_people, century=century, decade=decade, year=year, year_summary=year_summary)
+
+
+@app.route('/authentication', methods=['GET', 'POST'])
+def autentication():
+    '''
+    The autentication page is used to log in to the contributor mode of the website.
+    '''
+    if session.get('logged_in'):
+        return redirect(url_for('index'))
+    return render_template('authentication.html')
+
+
+@app.route('/github/callback')
+def github_callback():
+    '''
+    The github callback is used to log in to the contributor mode of the website.
+    '''
+    if session.get('logged_in'):
+        return redirect(url_for('index'))
+
+    code = request.args.get('code')
+
+    if code is None:
+        return redirect(url_for('authentication'))
+
+    try:
+        response = requests.post('https://github.com/login/oauth/access_token?client_id={}&client_secret={}&code={}'.format(
+            os.getenv('GITHUB_CLIENT_ID'), os.getenv('GITHUB_CLIENT_SECRET'), code), headers={'Accept': 'application/json'}, timeout=5)
+
+        user_data = requests.get('https://api.github.com/user', headers={
+            'Authorization': 'Bearer {}'.format(response.json()['access_token'])}, timeout=5).json()
+
+        if user_data['email'] is None:
+            email = requests.get('https://api.github.com/user/emails', headers={
+                'Authorization': 'Bearer {}'.format(response.json()['access_token'])}, timeout=5).json()
+            for record in email:
+                if record['primary'] == True:
+                    user_data['email'] = record['email']
+                    break
+
+        if DB.users.find_one({"email": user_data['email']}) is None:
+            DB.users.insert_one({"email": user_data['email'], "contributor": False, "admin": False,
+                                "username": user_data['login'], "name": user_data['name'], "avatar_url": user_data['avatar_url']})
+
+        user_info = DB.users.find_one({"email": user_data['email']})
+
+        session['logged_in'] = True
+        session['username'] = user_info['username']
+        session['name'] = user_info['name']
+        session['email'] = user_info['email']
+        session['avatar_url'] = user_info['avatar_url']
+        session['contributor'] = user_info['contributor']
+        session['admin'] = user_info['admin']
+
+        return redirect(url_for('contribute'))
+    except:
+        return redirect(url_for('authentication'))
+
+
+@app.route('/contribute')
+def contribute():
+    '''
+    The contribute page is used to add new data to the database.
+    '''
+    if not session.get('logged_in'):
+        return redirect(url_for('authentication'))
+    return f"Hello {session['name']}, you are logged in as @{session['username']} with email {session['email']} and avatar {session['avatar_url']}"
 
 
 if __name__ == '__main__':
