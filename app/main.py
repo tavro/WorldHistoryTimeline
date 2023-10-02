@@ -103,7 +103,7 @@ def authentication():
     The autentication page is used to log in to the contributor mode of the website.
     '''
     if session.get('logged_in'):
-        return redirect(url_for('index'))
+        return redirect(url_for('contribute'))
     return render_template('authentication.html')
 
 
@@ -113,11 +113,12 @@ def github_callback():
     The github callback is used to log in to the contributor mode of the website.
     '''
     if session.get('logged_in'):
-        return redirect(url_for('index'))
+        return redirect(url_for('contribute'))
 
     code = request.args.get('code')
 
     if code is None:
+        print("No code provided")
         return redirect(url_for('authentication'))
 
     try:
@@ -152,7 +153,6 @@ def github_callback():
         return redirect(url_for('contribute'))
     except Exception as e:
         print(e)
-
         return redirect(url_for('authentication'))
 
 
@@ -162,6 +162,7 @@ def contribute():
     The contribute page is used to add new data to the database.
     '''
     if not session.get('logged_in'):
+        print("Not logged in")
         return redirect(url_for('authentication'))
     return f"Hello {session['name']}, you are logged in as @{session['username']} with email {session['email']} and avatar {session['avatar_url']}"
 
