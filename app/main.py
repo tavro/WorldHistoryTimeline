@@ -28,7 +28,7 @@ def add_header(response):
 
 @app.route('/')
 def index():
-    century_data = DB.century_data.find()
+    century_data = DB.century_data.find().sort("century", pymongo.ASCENDING)
     resposne = make_response(render_template(
         'index.html', century_data=century_data))
     return resposne
@@ -38,7 +38,12 @@ def index():
 def century(century):
     if not century.isdigit():
         abort(404)
-    decade_data = DB.decade_data.find({"century": century})
+    decade_data = DB.decade_data.find({"century": century}).sort(
+        "decade")
+    if decade_data is None:
+        decade_data = []
+    else:
+        decade_data = sorted(decade_data, key=lambda k: int(k['decade']))
     return render_template('century.html', decade_data=decade_data, century=century)
 
 
@@ -46,7 +51,16 @@ def century(century):
 def decade(century, decade):
     if not century.isdigit() or not decade.isdigit():
         abort(404)
-    year_data = DB.year_data.find({"decade": decade})
+    year_data = DB.year_data.find(
+        {"decade": decade, "century": century})
+
+    if year_data is None:
+        year_data = []
+    else:
+        year_data = sorted(year_data, key=lambda k: int(k['year']))
+
+
+
     return render_template('decade.html', year_data=year_data, century=century, decade=decade)
 
 
@@ -54,11 +68,21 @@ def decade(century, decade):
 def year(century, decade, year):
     if not century.isdigit() or not decade.isdigit() or not year.isdigit():
         abort(404)
+
     famous_people = DB.famous_people.find(
         {"year": year, "decade": decade, "century": century})
     year_summary = DB.year_data.find_one(
-        {"year": str(year), "decade": str(decade), "century": str(century)})["summary"]
+        {"year": str(year), "decade": str(decade), "century": str(century)})
 
+
+    if famous_people is None:
+        famous_people = []
+
+    if year_summary is None:
+        year_summary = "No summary is currently available for this year."
+    else:
+        year_summary = year_summary["summary"]
+    
     return render_template('year.html', famous_people=famous_people, century=century, decade=decade, year=year, year_summary=year_summary)
 
 
