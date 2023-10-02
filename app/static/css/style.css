@@ -87,8 +87,6 @@ p {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  white-space: nowrap;
-  
 }
 
 .info-box img {
@@ -247,8 +245,6 @@ p {
   flex-direction: row;
   gap: 20px;
 }
-
-
 
 @media all and (max-width: 991px) {}
 
