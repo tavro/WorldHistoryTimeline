@@ -17,12 +17,10 @@
           {% for century in century_data %}
           <div class="event d-flex-2">
             <div class="event-blank"></div>
-            <div class="event-text d-flex-2">
+            <div class="event-text d-flex-2" data-id="{{ century._id }}" data-type="century">
               <span>
                 <h6>
-                  <a href="/{{ century.century }}"
-                    >{{ century.century }}
-                    </a>
+                  <a href="/{{ century.century }}">{{ century.century }}</a>
                 </h6>
                 — {{ century.summary|safe }}
                 <br />
@@ -31,12 +29,20 @@
                     <a href="{{ century.sources[i] }}">{{ [i] }}</a>
                     {% endfor %}
                 <br />
+                
                 {% if century.needs_improvement %}
-                <a href="#contribute">
-                <p class="tag">Needs major improvement</p>
+                <a class="edit-tag" href="#contribute">
+                  <p class="tag">Needs major improvement</p>
                 </a>
+                {% endif %}
+
+                {% if session.logged_in  %}
+                <a class="edit-tag" href="../contribute/edit/century/{{ century._id }}">
+                  <p>Edit</p>
+                </a>
+                {% endif %}
               </span>
-              {% endif %}
+               
               <div class="event-circle"></div>
             </div>
           </div>
@@ -57,7 +63,8 @@
         <div>
             <h2>Contribute to the project</h2>
             <p class="timeline-footer-paragraph">
-                Please feel free to contribute by fact checking and making the summaries better, you can do this by editing from our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project.
+                Please feel free to contribute by fact-checking and making the summaries better. You can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project.
+            </p>
         </div>
       </div>
     </div>

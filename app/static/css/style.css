@@ -80,13 +80,14 @@ p {
   margin-top: 8px;
   margin-right: 8px;
   padding: 8px;
-  height: 512px;
+  height: 550px;
   width: 256px;
   vertical-align: baseline;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
 }
 
 .info-box img {
@@ -95,13 +96,11 @@ p {
 }
 
 .tag {
-  margin-top: 8px;
   background-color: #1d1f1c;
-  color: #d45858;
+  color: #d45858 !important;
   display: inline-block;
-  border-radius: 4px;
-  padding-left: 8px;
-  padding-right: 8px;
+  text-decoration: none;
+
 }
 
 .summary {
@@ -328,6 +327,39 @@ p {
   .event:nth-child(even) .event-text span {
     text-align: left !important;
   }
+}
+
+.edit-tag{
+  margin-top: 8px;
+  background-color: #1d1f1c;
+  display: inline-block;
+  border-radius: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  text-decoration: none;
+} 
+
+.edit-tag p{
+  color: #008000;
+  text-decoration: none;
+}
+
+.edit-tag-people {
+  margin-top: 8px;
+  background-color: #1d1f1c;
+  display: inline-block;
+  border-radius: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  text-decoration: none;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+}
+
+.edit-tag-people p{
+  color: #008000;
+  text-decoration: none;
 }
 
 @media all and (max-width: 575px) {}

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title> {{century}} - World History Timeline</title>
+    <title> {{century}}/{{decade}} - World History Timeline</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="/static/css/style.css" />
     <link rel="icon" href="https://static.thenounproject.com/png/26949-200.png" />
@@ -11,38 +11,33 @@
     <div class="timeline-wrapper">
       <div class="container">
         <div class="timeline-title">
-          <h2>{{ century }} - {{'%03d' % ((century|int) + 99) }} </h2>
-          <div class="back"><a href="../">go back</a></div>
+          <h2>{{ ((decade|int) + 1) }} - {{'%02d' % ((decade|int) + 10) }} </h2>
+          <div class="back"><a href="../{{ century }}">go back</a></div>
         </div>
         <div class="events-wrapper">
-          {% for decade in decade_data %}
+          {% for year in year_data %}
           <div class="event d-flex-2">
             <div class="event-blank"></div>
-            <div class="event-text d-flex-2" data-id="{{ decade._id }}" data-type="decade">
+            <div class="event-text d-flex-2" id="{{ year.year }}">
               <span>
                 <h6>
-                  <a href="../{{ century }}/{{ decade.decade }}"
-                    >{{ decade.decade }}
+                  <a href="../{{ century }}/{{ decade }}/{{ year.year }}"
+                    >{{ year.year }}
                     </a>
                 </h6>
-                — {{ decade.summary|safe }}
+                — {{ year.summary|safe }}
                 <br />
                 Sources:
-                    {% for i in range(decade.sources|length) %}
-                    <a href="{{ decade.sources[i] }}">{{ [i] }}</a>
+                    {% for i in range(year.sources|length) %}
+                    <a href="{{ year.sources[i] }}">{{ [i] }}</a>
                     {% endfor %}
                 <br />
-                {% if decade.needs_improvement %}
-                <a class="edit-tag" href="#contribute">
+                {% if year.needs_improvement %}
+                <a href="#contribute">
                 <p class="tag">Needs major improvement</p>
                 </a>
-              {% endif %}
-              {% if session.logged_in %}
-                <a class="edit-tag" href="../contribute/edit/decade/{{ decade._id }}">
-                  <p>Edit</p>
-                </a>
-                {% endif %}
               </span>
+              {% endif %}
               <div class="event-circle"></div>
             </div>
           </div>
@@ -68,4 +63,7 @@
       </div>
     </div>
   </body>
+  <script>
+    includeHTML();
+  </script>
 </html>

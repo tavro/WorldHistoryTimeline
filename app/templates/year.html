@@ -22,13 +22,22 @@
         <hr />
         <div class="info-boxes">
           {% for person in famous_people %}
-            <div class="info-box">
-                <h4>{{person.name}}</h4>
-                <hr />
-                <img src="{{person.image}}" height="172px" width="172px" />
-                <p><b>Lifetime:</b> {{person.lifetime}}</p>
-                <p class="people_summary" id="{{person._id}}"> <b>Summary:</b> {{person.summary}}</p>
-            </div>
+          <div class="info-box" data-id="{{person._id}}" data-type="person">
+            <h4>{{person.name}}</h4>
+            <hr />
+            <img src="{{person.image}}" height="172px" width="172px" />
+            <p><b>Lifetime:</b> {{person.lifetime}}</p>
+            <p class="people_summary"><b>Summary:</b> {{person.summary}}</p>
+            
+            {% if session.logged_in %}
+            <a
+              class="edit-tag-people"
+              href="../contribute/edit/famous_people/{{ person._id }}"
+            >
+              <p>Edit</p>
+            </a>
+            {% endif %}
+          </div>
           {% endfor %}
         </div>
       </div>

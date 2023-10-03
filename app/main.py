@@ -34,10 +34,10 @@ if MONGO_CLIENT.admin.command('ping')['ok'] == 1:
     print("Connected to MongoDB Atlas")
 
 
-@app.after_request
-def add_header(response):
-    response.headers['Cache-Control'] = 'public, max-age= 3600'
-    return response
+# @app.after_request
+# def add_header(response):
+#     response.headers['Cache-Control'] = 'public, max-age= 3600'
+#     return response
 
 
 @app.route('/')
@@ -164,8 +164,7 @@ def contribute():
     if not session.get('logged_in'):
         print("Not logged in")
         return redirect(url_for('authentication'))
-    return f"Hello {session['name']}, you are logged in as @{session['username']} with email {session['email']} and avatar {session['avatar_url']}"
-
+    return render_template('contribute.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
