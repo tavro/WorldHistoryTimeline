@@ -4,3 +4,4 @@ redis
 python-dotenv
 Flask-Session
 requests
+bson

@@ -6,6 +6,8 @@ from flask_session import Session
 import redis
 import pymongo
 import requests
+from bson.objectid import ObjectId
+
 
 load_dotenv()
 
@@ -165,6 +167,34 @@ def contribute():
         print("Not logged in")
         return redirect(url_for('authentication'))
     return render_template('contribute.html')
+
+
+@app.route('/contribute/edit/<data_type>/<id>', methods=['GET', 'POST'])
+def edit(data_type, id):
+    '''
+    The edit page is used to edit existing data in the database.
+    '''
+    if not session.get('logged_in'):
+        return redirect(url_for('authentication'))
+    if len(id) != 24:
+        abort(404)
+    match data_type:
+        case "century":
+            data = DB.century_data.find_one({"_id": ObjectId(id)})
+        case "decade":
+            data = DB.decade_data.find_one({"_id": ObjectId(id)})
+        case "year":
+            data = DB.year_data.find_one({"_id": ObjectId(id)})
+        case "famous_people":
+            data = DB.famous_people.find_one({"_id": ObjectId(id)})
+        case _:
+            abort(404)
+
+    print(data)
+    if data is None:
+        abort(404)
+    return "Data: {}".format(data)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
