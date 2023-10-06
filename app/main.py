@@ -233,6 +233,14 @@ def edit_data(data_type, id):
 
     return redirect(url_for('edit', data_type=data_type, id=id))
 
+@app.route('/logout')
+def logout():
+    '''
+    The logout page is used to log out of the contributor mode of the website.
+    '''
+    session.clear()
+    return redirect(url_for('index'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
