@@ -38,7 +38,8 @@ if MONGO_CLIENT.admin.command('ping')['ok'] == 1:
 
 @app.after_request
 def add_header(response):
-    response.headers['Cache-Control'] = 's-maxage=1, stale-while-revalidate = 1', 'public', 'max-age=86400'
+    if not request.path.startswith('/static/') and not request.path.startswith('/contribute') and not request.path.startswith('/edit') and not request.path.startswith('/github/callback') and not request.path.startswith('/authentication') and not request.path.startswith('/logout'):
+        response.headers['Cache-Control'] = 's-maxage=3600, stale-while-revalidate = 3600', 'public', 'max-age=3600'
     return response
 
 
