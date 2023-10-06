@@ -8,41 +8,7 @@
     <link rel="icon" href="https://static.thenounproject.com/png/26949-200.png" />
   </head>
   <body>
-    <div class="timeline-wrapper">
-      <div class="container">
-        <div class="timeline-title">
-          <h2>{{ ((decade|int) + 1) }} - {{'%02d' % ((decade|int) + 10) }} </h2>
-          <div class="back"><a href="../{{ century }}">go back</a></div>
-        </div>
-        <div class="events-wrapper">
-          {% for year in year_data %}
-          <div class="event d-flex-2">
-            <div class="event-blank"></div>
-            <div class="event-text d-flex-2" id="{{ year.year }}">
-              <span>
-                <h6>
-                  <a href="../{{ century }}/{{ decade }}/{{ year.year }}"
-                    >{{ year.year }}
-                    </a>
-                </h6>
-                — {{ year.summary|safe }}
-                <br />
-                Sources:
-                    {% for i in range(year.sources|length) %}
-                    <a href="{{ year.sources[i] }}">{{ [i] }}</a>
-                    {% endfor %}
-                <br />
-                {% if year.needs_improvement %}
-                <a href="#contribute">
-                <p class="tag">Needs major improvement</p>
-                </a>
-              </span>
-              {% endif %}
-              <div class="event-circle"></div>
-            </div>
-          </div>
-          
-          {% endfor %}
+    <h2>Under construction</h2>
         </div>
 
         <div class="timeline-footer-title" id="contribute">
@@ -64,6 +30,7 @@
     </div>
     {% if session.logged_in %}
     <div class="user_buttons">
+      <p>Logged in as <a href="https://github.com/{{ session.username }}">@{{ session.username }}</a></p>
       <button class="user_button" onclick="window.location.href='/logout'">Logout</button>
       <button class="user_button" onclick="window.location.href='/account'">Account</button>
     </div>

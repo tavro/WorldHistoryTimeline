@@ -62,6 +62,7 @@
 </div>
 {% if session.logged_in %}
 <div class="user_buttons">
+  <p>Logged in as <a href="https://github.com/{{ session.username }}">@{{ session.username }}</a></p>
 <button class="user_button" onclick="window.location.href='/logout'">Logout</button>
 <button class="user_button" onclick="window.location.href='/account'">Account</button>
 </div>
