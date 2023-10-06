@@ -45,8 +45,6 @@ def add_header(response):
 
 @app.route('/')
 def index():
-    session['logged_in'] = True
-    session['username'] = "testuser"
     century_data = DB.century_data.find().sort("century")
     if century_data is None:
         century_data = []
