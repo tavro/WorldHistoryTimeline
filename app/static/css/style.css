@@ -513,15 +513,23 @@ input[type="submit"] {
   margin: 0 40px;
 }
 
+.user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 40px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
 .user_buttons {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
   gap: 5px;
-  margin-top: 20px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
   font: inherit;
 }
 
