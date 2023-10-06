@@ -42,5 +42,31 @@
         </div>
       </div>
     </div>
+    <div class="timeline-footer-title" id="contribute">
+      <div>
+          <h2>Made by Isak Horvath</h2>
+          <p class="timeline-footer-paragraph">
+              This is a hobby project developed by one person with little to no
+              free time, if you want to support this or other similar projects
+              please visit this
+              <a href="https://github.com/tavro">GitHub</a> account.
+          </p>
+      </div>
+  <div>
+      <h2>Contribute to the project</h2>
+      <p class="timeline-footer-paragraph">
+          Please feel free to contribute by fact-checking and making the summaries better. You can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project.
+      </p>
+  </div>
+</div>
+</div>
+{% if session.logged_in %}
+<div class="user_buttons">
+<button class="user_button" onclick="window.location.href='/logout'">Logout</button>
+<button class="user_button" onclick="window.location.href='/contribute'">Contribute</button>
+<button class="user_button" onclick="window.location.href='/account'">Account</button>
+</div>
+{% endif %}
+    
   </body>
 </html>

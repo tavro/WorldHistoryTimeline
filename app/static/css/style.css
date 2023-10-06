@@ -1,3 +1,5 @@
+@import url('https://db.onlinewebfonts.com/c/1db29588408eadbd4406aae9238555eb?family=Consolas');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,7 +7,7 @@
 
 body {
   background-color: #afac9b;
-  font-family: Consolas, serif;
+  font-family: 'Consolas';
 }
 
 ul {
@@ -243,6 +245,12 @@ p {
   align-items: center;
   flex-direction: row;
   gap: 20px;
+  flex-wrap: wrap;
+  padding: 0 40px;
+}
+
+.timeline-footer-title div {
+  min-width: 200px;
 }
 
 .authentication {
@@ -368,6 +376,7 @@ p {
   font-size: 32px;
   text-align: center;
   margin-bottom: 20px;
+  padding: 0 40px;
 }
 
 .edit-summary {
@@ -493,6 +502,29 @@ form textarea {
 }
 
 input[type="submit"] {
+  background-color: #1d1f1c;
+  color: #FFFFFF;
+  display: inline-block;
+  border-radius: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin: 0 40px;
+}
+
+.user_buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.user_buttons button {
   background-color: #1d1f1c;
   color: #FFFFFF;
   display: inline-block;

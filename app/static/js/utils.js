@@ -88,6 +88,7 @@ function handleSummaryForm(event) {
     .then(response => response.json())
     .then(data => {
       if (data["status"] == "success") {
+        alert(data["message"]);
         window.location.href = data["redirect"];
       } else {
         alert(data["message"]);

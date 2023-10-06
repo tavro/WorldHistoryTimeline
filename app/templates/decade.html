@@ -67,9 +67,12 @@
                 Please feel free to contribute by fact checking and making the summaries better, you can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project.
         </div>
       </div>
+    </div>{% if session.logged_in %}
+    <div class="user_buttons">
+      <button class="user_button" onclick="window.location.href='/logout'">Logout</button>
+      <button class="user_button" onclick="window.location.href='/contribute'">Contribute</button>
+      <button class="user_button" onclick="window.location.href='/account'">Account</button>
     </div>
+    {% endif %}
   </body>
-  <script>
-    includeHTML();
-  </script>
 </html>
