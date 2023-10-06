@@ -44,7 +44,11 @@ if MONGO_CLIENT.admin.command('ping')['ok'] == 1:
 
 @app.route('/')
 def index():
-    century_data = DB.century_data.find().sort("century", pymongo.ASCENDING)
+    century_data = DB.century_data.find().sort("century")
+    if century_data is None:
+        century_data = []
+    else:
+        century_data = sorted(century_data, key=lambda k: int(k['century']))
     resposne = make_response(render_template(
         'index.html', century_data=century_data))
     return resposne
@@ -60,6 +64,7 @@ def century(century):
         decade_data = []
     else:
         decade_data = sorted(decade_data, key=lambda k: int(k['decade']))
+        print(decade_data)
     return render_template('century.html', decade_data=decade_data, century=century)
 
 
@@ -169,7 +174,7 @@ def contribute():
     return render_template('contribute.html')
 
 
-@app.route('/contribute/edit/<data_type>/<id>', methods=['GET', 'POST'])
+@app.route('/contribute/edit/<data_type>/<id>', methods=['GET'])
 def edit(data_type, id):
     '''
     The edit page is used to edit existing data in the database.
@@ -178,22 +183,55 @@ def edit(data_type, id):
         return redirect(url_for('authentication'))
     if len(id) != 24:
         abort(404)
-    match data_type:
-        case "century":
-            data = DB.century_data.find_one({"_id": ObjectId(id)})
-        case "decade":
-            data = DB.decade_data.find_one({"_id": ObjectId(id)})
-        case "year":
-            data = DB.year_data.find_one({"_id": ObjectId(id)})
-        case "famous_people":
-            data = DB.famous_people.find_one({"_id": ObjectId(id)})
-        case _:
+
+    if data_type == "century":
+        data = DB.century_data.find_one({"_id": ObjectId(id)})
+
+        summary = data['summary']
+        data_time_period = data['century']
+        if data is None:
             abort(404)
 
-    print(data)
-    if data is None:
+    elif data_type == "decade":
+        data = DB.decade_data.find_one({"_id": ObjectId(id)})
+        summary = data['summary']
+        data_time_period = data['decade']
+
+        if data is None:
+            abort(404)
+
+    elif data_type == "year":
+        data = DB.year_data.find_one({"_id": ObjectId(id)})
+        summary = data['summary']
+        data_time_period = data['year']
+        if data is None:
+            abort(404)
+
+    elif data_type == "famous_people":
+        data = DB.famous_people.find_one({"_id": ObjectId(id)})
+        if data is None:
+            abort(404)
+
+    else:
         abort(404)
-    return "Data: {}".format(data)
+
+    return render_template('edit.html', data=data, data_type=data_type, data_time_period=data_time_period, summary=summary, data_id=id)
+
+@app.route('/edit/<data_type>/<id>', methods=['POST'])
+def edit_data(data_type, id):
+    '''
+    The edit_data page is used to edit existing data in the database.
+    '''
+    if not session.get('logged_in'):
+        return redirect(url_for('authentication'))
+    if len(id) != 24:
+        abort(404)
+
+    data = request.get_json()
+
+    print(data)
+
+    return redirect(url_for('edit', data_type=data_type, id=id))
 
 
 if __name__ == '__main__':
