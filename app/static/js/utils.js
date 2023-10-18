@@ -56,6 +56,12 @@ function handleSummaryForm(event) {
     alert("Summary cannot be empty.");
     return false;
   }
+  let originalSummary = document.getElementById("default-summary").textContent;
+
+  if (summary == originalSummary) {
+    alert("Edited summary cannot be the same as the original summary.");
+    return false;
+  }
   let sourceList = document.getElementById("source-list");
   if (sourceList.children.length == 0) {
     alert("Please add at least one source.");
@@ -65,28 +71,26 @@ function handleSummaryForm(event) {
   for (let i = 0; i < sourceList.children.length; i++) {
     sources.push(sourceList.children[i].getAttribute("data-source"));
   }
-  document.getElementById("source").value = JSON.stringify(sources);
-  
+  let sources_string = JSON.stringify(sources);
+
   let submitURL = document.getElementById("submit-url").value;
-  
+
   let submitButton = document.getElementById("submit-button");
   submitButton.disabled = true;
   submitButton.innerHTML = "Submitting...";
-
-  let newSources = document.getElementById("source").value;
 
   fetch(submitURL, {
     method: "POST",
     body: JSON.stringify({
       summary: summary,
-      sources: newSources
+      sources: sources_string,
     }),
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   })
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       if (data["status"] == "success") {
         alert(data["message"]);
         window.location.href = data["redirect"];
@@ -98,4 +102,70 @@ function handleSummaryForm(event) {
     });
 }
 
-document.getElementById("edit-form-summary").addEventListener("submit", handleSummaryForm);
+if (document.getElementById("edit-form-summary")) {
+  document
+    .getElementById("edit-form-summary")
+    .addEventListener("submit", handleSummaryForm);
+}
+
+function handleFamousPeopleSummaryForm(event) {
+  event.preventDefault();
+  let summary = document.getElementById("summary").value;
+  if (summary == "") {
+    alert("Summary cannot be empty.");
+    return false;
+  }
+  let originalSummary = document.getElementById("default-summary").textContent;
+  if (summary == originalSummary) {
+    alert("Edited summary cannot be the same as the original summary.");
+    return false;
+  }
+  let submitURL = document.getElementById("submit-url").value;
+
+  let submitButton = document.getElementById("submit-button");
+  submitButton.disabled = true;
+  submitButton.innerHTML = "Submitting...";
+
+  fetch(submitURL, {
+    method: "POST",
+    body: JSON.stringify({
+      summary: summary,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data["status"] == "success") {
+        alert(data["message"]);
+        window.location.href = data["redirect"];
+      } else {
+        alert(data["message"]);
+        submitButton.disabled = false;
+        submitButton.innerHTML = "Submit";
+      }
+    });
+}
+
+if (document.getElementById("edit-famous-people-form-summary")) {
+  document
+    .getElementById("edit-famous-people-form-summary")
+    .addEventListener("submit", handleFamousPeopleSummaryForm);
+}
+
+const items = document.querySelectorAll(".accordion button");
+
+function toggleAccordion() {
+  const itemToggle = this.getAttribute('aria-expanded');
+  
+  for (i = 0; i < items.length; i++) {
+    items[i].setAttribute('aria-expanded', 'false');
+  }
+  
+  if (itemToggle == 'false') {
+    this.setAttribute('aria-expanded', 'true');
+  }
+}
+
+items.forEach(item => item.addEventListener('click', toggleAccordion));

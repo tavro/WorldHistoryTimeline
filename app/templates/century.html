@@ -1,80 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title> {{century}} - World History Timeline</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="/static/css/style.css" />
-    <link rel="icon" href="https://static.thenounproject.com/png/26949-200.png" />
-  </head>
-  <body>
-    <div class="timeline-wrapper">
+   <head>
+      <meta charset="UTF-8" />
+      <title> {{century}} - World History Timeline</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <link rel="stylesheet" href="/static/css/style.css" />
+      <link rel="icon" href="https://static.thenounproject.com/png/26949-200.png" />
+   </head>
+   <body>
+      <div class="timeline-wrapper">
       <div class="container">
-        <div class="timeline-title">
-          <h2>{{ century }} - {{'%03d' % ((century|int) + 99) }} </h2>
-          <div class="back"><a href="../">go back</a></div>
-        </div>
-        <div class="events-wrapper">
-          {% for decade in decade_data %}
-          <div class="event d-flex-2">
-            <div class="event-blank"></div>
-            <div class="event-text d-flex-2" data-id="{{ decade._id }}" data-type="decade">
-              <span>
-                <h6>
-                  <a href="../{{ century }}/{{ decade.decade }}"
-                    >{{ decade.decade }}
-                    </a>
-                </h6>
-                — {{ decade.summary|safe }}
-                <br />
-                Sources:
-                    {% for i in range(decade.sources|length) %}
-                    <a href="{{ decade.sources[i] }}">{{ [i] }}</a>
-                    {% endfor %}
-                <br />
-                {% if decade.needs_improvement %}
-                <a class="edit-tag" href="#contribute">
-                <p class="tag">Needs major improvement</p>
-                </a>
-              {% endif %}
-              {% if session.logged_in %}
-                <a class="edit-tag" href="../contribute/edit/decade/{{ decade._id }}">
-                  <p>Edit</p>
-                </a>
-                {% endif %}
-              </span>
-              <div class="event-circle"></div>
+         <div class="timeline-title">
+            <h2>{{ century }} - {{'%03d' % ((century|int) + 99) }} </h2>
+            <div class="back"><a href="../">go back</a></div>
+         </div>
+         <div class="events-wrapper">
+            {% for decade in decade_data %}
+            <div class="event d-flex-2">
+               <div class="event-blank"></div>
+               <div class="event-text d-flex-2" data-id="{{ decade._id }}" data-type="decade">
+                  <span>
+                     <h6>
+                        <a href="../{{ century }}/{{ decade.decade }}"
+                           >{{ decade.decade }}
+                        </a>
+                     </h6>
+                     — {{ decade.summary|safe }}
+                     <br />
+                     Sources:
+                     {% for i in range(decade.sources|length) %}
+                     <a href="{{ decade.sources[i] }}">{{ [i] }}</a>
+                     {% endfor %}
+                     <br />
+                     {% if decade.needs_improvement %}
+                     <a class="edit-tag" href="#contribute">
+                        <p class="tag">Needs major improvement</p>
+                     </a>
+                     {% endif %}
+                     {% if session.logged_in %}
+                     <a class="edit-tag" href="../contribute/edit/decade/{{ decade._id }}">
+                        <p>Edit</p>
+                     </a>
+                     {% endif %}
+                  </span>
+                  <div class="event-circle"></div>
+               </div>
             </div>
-          </div>
-          
-          {% endfor %}
-        </div>
-
-        <div class="timeline-footer-title" id="contribute">
+            {% endfor %}
+         </div>
+         <div class="timeline-footer-title" id="contribute">
             <div>
-                <h2>Made by Isak Horvath</h2>
-                <p class="timeline-footer-paragraph">
-                    This is a hobby project developed by one person with little to no
-                    free time, if you want to support this or other similar projects
-                    please visit this
-                    <a href="https://github.com/tavro">GitHub</a> account.
-                </p>
+               <h2>Made by Isak Horvath</h2>
+               <p class="timeline-footer-paragraph">
+                  This is a hobby project developed by one person with little to no
+                  free time, if you want to support this or other similar projects
+                  please visit this
+                  <a href="https://github.com/tavro">GitHub</a> account.
+               </p>
             </div>
-        <div>
-            <h2>Contribute to the project</h2>
-            <p class="timeline-footer-paragraph">
-                Please feel free to contribute by fact checking and making the summaries better, you can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project.
-        </div>
+            <div>
+               <h2>Contribute to the project</h2>
+               <p class="timeline-footer-paragraph">
+                  Please feel free to contribute by fact checking and making the summaries better, you can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project.
+            </div>
+         </div>
       </div>
-    </div>
-    {% if session.logged_in %}
-    <div class="user">
-      <p>Logged in as <a href="https://github.com/{{ session.username }}">@{{ session.username }}</a></p>
-    <div class="user_buttons">
-    <button class="user_button" onclick="window.location.href='/logout'">Logout</button>
-    <button class="user_button" onclick="window.location.href='/account'">Account</button>
-    </div>
-    </div>
-    {% endif %}
-  </body>
+      {% if session.logged_in %}
+      <div class="user">
+         <p>Logged in as <a href="https://github.com/{{ session.username }}">@{{ session.username }}</a></p>
+         <div class="user_buttons">
+            <button class="user_button" onclick="window.location.href='/logout'">Logout</button>
+            <button class="user_button" onclick="window.location.href='/account'">Account</button>
+         </div>
+      </div>
+      {% endif %}
+   </body>
 </html>

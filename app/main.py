@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 import json
+import datetime
 from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify, session, flash, abort
 from flask_session import Session
 import redis
@@ -45,6 +46,15 @@ def add_header(response):
 
 @app.route('/')
 def index():
+    session['logged_in'] = True
+    session['username'] = "test"
+    session['name'] = "test"
+    session['email'] = "test"
+    session['avatar_url'] = "test"
+    session['contributor'] = True
+    session['admin'] = True
+    session['userid'] = "test"
+    session['avatar_url'] = "https://avatars.githubusercontent.com/u/96434205"
     century_data = DB.century_data.find().sort("century")
     if century_data is None:
         century_data = []
@@ -144,13 +154,13 @@ def github_callback():
                     user_data['email'] = record['email']
                     break
 
-        if DB.users.find_one({"email": user_data['email']}) is None:
-            DB.users.insert_one({"email": user_data['email'], "contributor": False, "admin": False,
-                                "username": user_data['login'], "name": user_data['name'], "avatar_url": user_data['avatar_url']})
+        if DB.users.find_one({"userid": user_data['id']}) is None:
+            DB.users.insert_one({"userid": user_data['id'], "username": user_data['login'], "name": user_data['name'], "email": user_data['email'], "avatar_url": user_data['avatar_url'], "contributor": False, "admin": False})
 
         user_info = DB.users.find_one({"email": user_data['email']})
 
         session['logged_in'] = True
+        session['userid'] = user_info['userid']
         session['username'] = user_info['username']
         session['name'] = user_info['name']
         session['email'] = user_info['email']
@@ -170,9 +180,11 @@ def contribute():
     The contribute page is used to add new data to the database.
     '''
     if not session.get('logged_in'):
-        print("Not logged in")
         return redirect(url_for('authentication'))
-    return render_template('contribute.html')
+    contributions=[]
+    for contribution in DB.suggestions.find({"contributor": session['userid']}).sort("_id", -1):
+        contributions.append(contribution)
+    return render_template('contribute.html', contributions=contributions)
 
 
 @app.route('/contribute/edit/<data_type>/<id>', methods=['GET'])
@@ -184,6 +196,10 @@ def edit(data_type, id):
         return redirect(url_for('authentication'))
     if len(id) != 24:
         abort(404)
+
+    if data_type not in ["century", "decade", "year"]:
+        abort(404)
+
 
     if data_type == "century":
         data = DB.century_data.find_one({"_id": ObjectId(id)})
@@ -218,6 +234,23 @@ def edit(data_type, id):
 
     return render_template('edit.html', data=data, data_type=data_type, data_time_period=data_time_period, summary=summary, data_id=id)
 
+@app.route('/contribute/edit/famous-people/<id>', methods=['GET'])
+def edit_people(id):
+    '''
+    The edit_people page is used to edit existing data in the database.
+    '''
+    if not session.get('logged_in'):
+        return redirect(url_for('authentication'))
+    if len(id) != 24:
+        abort(404)
+
+    data = DB.famous_people.find_one({"_id": ObjectId(id)})
+
+    if data is None:
+        abort(404)
+
+    return render_template('edit_people.html', data=data, data_id=id)
+
 @app.route('/edit/<data_type>/<id>', methods=['POST'])
 def edit_data(data_type, id):
     '''
@@ -230,9 +263,44 @@ def edit_data(data_type, id):
 
     data = request.get_json()
 
-    print(data)
+    print(data['summary'])
 
-    return redirect(url_for('edit', data_type=data_type, id=id))
+    if data['summary'] == "":
+        abort(400)
+    
+    if data['sources'] == "":
+        abort(400)
+
+    sources = json.loads(data['sources'])
+    sources_list = []
+    for source in sources:
+        sources_list.append(source)
+
+
+    DB.suggestions.insert_one({"data_type": data_type, "updated_summary": data['summary'], "updated_sources": sources_list, "data_id": id, "contributor": session['userid'], 'status': 'pending', 'contribution_type': 'edit', 'timestamp': datetime.datetime.now().strftime("%d/%m/%Y")})
+
+    return jsonify({"status": "success", 'redirect': '/contribute#contribution-history', 'message': 'Your contribution has been submitted for review.'})
+
+@app.route('/edit/famous-people/<id>', methods=['POST'])
+def edit_famous_people_data(id):
+    '''
+    The edit_data page is used to edit existing data in the database.
+    '''
+    if not session.get('logged_in'):
+        return redirect(url_for('authentication'))
+    if len(id) != 24:
+        abort(404)
+
+    data = request.get_json()
+
+    if data.summary == "":
+        abort(400)
+
+    DB.suggestions.insert_one({"data_type": "famous_people", "updated_summary": data.summary, "data_id": id, "contributor": session['userid'], 'status': 'pending', 'contribution_type': 'edit', 'timestamp': datetime.datetime.now().strftime("%d/%m/%Y")})
+
+    return jsonify({"status": "success", 'redirect': '/contribute#contribution-history', 'message': 'Your contribution has been submitted for review.'})
+
+
 
 @app.route('/logout')
 def logout():

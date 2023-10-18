@@ -4,5 +4,4 @@ redis
 python-dotenv
 Flask-Session
 requests
-flask-ckeditor
-WTForms
+pyuploadcare
