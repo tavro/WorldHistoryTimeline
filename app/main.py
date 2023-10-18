@@ -46,15 +46,15 @@ def add_header(response):
 
 @app.route('/')
 def index():
-    session['logged_in'] = True
-    session['username'] = "test"
-    session['name'] = "test"
-    session['email'] = "test"
-    session['avatar_url'] = "test"
-    session['contributor'] = True
-    session['admin'] = True
-    session['userid'] = "test"
-    session['avatar_url'] = "https://avatars.githubusercontent.com/u/96434205"
+    # session['logged_in'] = True
+    # session['username'] = "test"
+    # session['name'] = "test"
+    # session['email'] = "test"
+    # session['avatar_url'] = "test"
+    # session['contributor'] = True
+    # session['admin'] = True
+    # session['userid'] = "test"
+    # session['avatar_url'] = "https://avatars.githubusercontent.com/u/96434205"
     century_data = DB.century_data.find().sort("century")
     if century_data is None:
         century_data = []
@@ -173,6 +173,9 @@ def github_callback():
         print(e)
         return redirect(url_for('authentication'))
 
+@app.route('/account')
+def account():
+    return redirect(url_for('contribute')), 301
 
 @app.route('/contribute')
 def contribute():
