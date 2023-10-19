@@ -63,7 +63,7 @@ p {
     align-items: center;
     flex-direction: row;
     gap: 20px;
-    padding: 0 40px;
+    padding: 0 10px;
     height: 100%;
     margin-bottom: 50px;
 }
@@ -149,6 +149,14 @@ p {
 .timeline-wrapper {
     padding: 80px 0;
 }
+
+.container {
+    width: 100%;
+    max-width: 1140px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
 
 .image-wrapper {
     display: flex;
@@ -574,7 +582,7 @@ input[type="submit"] {
     margin: 0 40px;
 }
 
-.user-information, .user-contributions, .faqs-container {
+.user-profile-picture, .user-contributions, .faqs-container {
     margin-left: 30px !important;
 } 
 
