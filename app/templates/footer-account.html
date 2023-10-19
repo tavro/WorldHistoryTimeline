@@ -1,0 +1,10 @@
+{% if session.logged_in %}
+      <div class="user">
+         <p>Logged in as <a href="https://github.com/{{ session.username }}">@{{ session.username }}</a></p>
+         <div class="user_buttons">
+            <button class="user_button" onclick="window.location.href='/logout'">Logout</button>
+            <button class="user_button" onclick="window.location.href='/'">Home</button>
+            <button class="user_button" onclick="window.location.href='/account'">Account</button>
+         </div>
+      </div>
+{% endif %}
