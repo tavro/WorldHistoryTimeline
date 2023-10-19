@@ -5,12 +5,13 @@
       <title>World History Timeline</title>
       <meta name="viewport" content="width=device-width,initial-scale=1" />
       <link rel="stylesheet" href="/static/css/style.css" />
-      <link rel="icon" href="https://static.thenounproject.com/png/26949-200.png" />
+      <link rel="icon"
+         href="https://static.thenounproject.com/png/26949-200.png" />
    </head>
    <body>
       {% include 'header.html' %}
-      </div>
-      <div class="timeline-wrapper">
+   </div>
+   <div class="timeline-wrapper">
       <div class="container">
          <div class="timeline-title">
             <h2>World History Timeline</h2>
@@ -19,7 +20,8 @@
             {% for century in century_data %}
             <div class="event d-flex-2">
                <div class="event-blank"></div>
-               <div class="event-text d-flex-2" data-id="{{ century._id }}" data-type="century">
+               <div class="event-text d-flex-2" data-id="{{ century._id }}"
+                  data-type="century">
                   <span>
                      <h6>
                         <a href="/{{ century.century }}">{{ century.century }}</a>
@@ -36,8 +38,9 @@
                         <p class="tag">Needs major improvement</p>
                      </a>
                      {% endif %}
-                     {% if session.logged_in  %}
-                     <a class="edit-tag" href="../contribute/edit/century/{{ century._id }}">
+                     {% if session.logged_in %}
+                     <a class="edit-tag"
+                        href="../contribute/edit/century/{{ century._id }}">
                         <p>Edit</p>
                      </a>
                      {% endif %}
@@ -51,8 +54,10 @@
             <div>
                <h2>Made by Isak Horvath</h2>
                <p class="timeline-footer-paragraph">
-                  This is a hobby project developed by one person with little to no
-                  free time, if you want to support this or other similar projects
+                  This is a hobby project developed by one person with little to
+                  no
+                  free time, if you want to support this or other similar
+                  projects
                   please visit this
                   <a href="https://github.com/tavro">GitHub</a> account.
                </p>
@@ -60,11 +65,15 @@
             <div>
                <h2>Contribute to the project</h2>
                <p class="timeline-footer-paragraph">
-                  Please feel free to contribute by fact-checking and making the summaries better. You can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project.
+                  Please feel free to contribute by fact-checking and making the
+                  summaries better. You can do this by editing through our <a
+                     href="/contribute">CMS</a> or by contributing to our <a
+                     href="https://github.com/tavro/WorldHistoryTimeline">GitHub
+                  </a>project.
                </p>
             </div>
          </div>
       </div>
-      
+
    </body>
 </html>
