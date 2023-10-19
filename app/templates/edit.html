@@ -21,6 +21,7 @@
       </script>
    </head>
    <body>
+      {% include 'header.html' %}
       <div class="timeline-wrapper">
          {% if data_type != "famous_people" %}
          <h2 class="edit-heading">Editing summary for the <span class="ordinal_suffix">{{data_time_period}}</span> {{data_type}}</h2>
@@ -73,6 +74,5 @@
          </div>
       </div>
       </div>
-      {% include 'footer-account.html' %}
    </body>
 </html>

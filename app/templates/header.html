@@ -1,0 +1,14 @@
+<div class="header">
+   <div class="header-container">
+      <a href="/">Home</a>
+      {% if session.admin %}
+      <a href="/admin">Admin</a>
+      {% endif %}
+      {% if session.logged_in %}
+      <a href="/account">Account</a>
+      <a href="/logout">Logout</a>
+      {% else %}
+      <a href="/authentication">Contribute</a>
+      {% endif %}
+   </div>
+</div>
