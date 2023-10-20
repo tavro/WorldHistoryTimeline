@@ -51,6 +51,19 @@
                   </div>
                </div>
                {% endfor %}
+               {% if session.logged_in and decade_data|length < 10 %}
+            <div class="event d-flex-2">
+               <div class="event-blank"></div>
+               <div class="event-text d-flex-2">
+                  <span>
+                     <h6>
+                        <a href="/contribute/add/decade?century={{ century }}&decade={{ '00' if decade_data|length == 0 else (decade_data[-1].decade|int + 10) }}">Add a new decade summary</a>
+                     </h6>
+                  </span>
+                  <div class="event-circle"></div>
+               </div>
+            </div>
+            {% endif %}
             </div>
             <div class="timeline-footer-title" id="contribute">
                <div>

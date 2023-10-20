@@ -14,7 +14,7 @@
       <div class="timeline-wrapper">
          <div class="container">
             <div class="timeline-title">
-               <h2>{{ ((decade|int) + 1) }} - {{'%02d' % ((decade|int) + 10) }}
+               <h2>{{'%02d' % ((decade|int)) }} - {{'%02d' % ((decade|int) + 9) }}
                </h2>
                <div class="back"><a href="../{{ century }}">go back</a></div>
             </div>
@@ -54,6 +54,19 @@
                   </div>
                </div>
                {% endfor %}
+               {% if session.logged_in and year_data|length < 10 %}
+            <div class="event d-flex-2">
+               <div class="event-blank"></div>
+               <div class="event-text d-flex-2">
+                  <span>
+                     <h6>
+                        <a href="/contribute/add/year?century={{ century }}&decade={{ decade }}&year={% if year_data|length > 0 %}{{ year_data[-1].year | int + 1 }}{% else %}1{% endif %}">Add a new year summary</a>
+                     </h6>
+                  </span>
+                  <div class="event-circle"></div>
+               </div>
+            </div>
+            {% endif %}
             </div>
             <div class="timeline-footer-title" id="contribute">
                <div>

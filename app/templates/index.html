@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width,initial-scale=1" />
       <link rel="stylesheet" href="/static/css/style.css" />
       <link rel="icon"
-         href="https://static.thenounproject.com/png/26949-200.png" />
+         href="/static/images/favicon.svg"
    </head>
    <body>
       {% include 'header.html' %}
@@ -49,6 +49,21 @@
                </div>
             </div>
             {% endfor %}
+            {% if session.logged_in and century_data|length < ((now.year | int) / 100) %}
+            <div class="event d-flex-2">
+               <div class="event-blank"></div>
+               <div class="event-text d-flex-2">
+                  <span>
+                     <h6>
+                        <a href="/contribute/add/century?century={% if century_data|length > 0 %}{{ century_data[-1].century | int + 100 }}{% else %}1{% endif %}">AAdd a new century summary</a>
+                     </h6>
+                  </span>
+                  <div class="event-circle"></div>
+               </div>
+            </div>
+            {% endif %}
+
+
          </div>
          <div class="timeline-footer-title" id="contribute">
             <div>

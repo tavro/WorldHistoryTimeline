@@ -63,7 +63,7 @@ p {
     align-items: center;
     flex-direction: row;
     gap: 20px;
-    padding: 0 10px;
+    padding: 0 20px;
     height: 100%;
     margin-bottom: 50px;
 }
@@ -147,7 +147,7 @@ p {
 }
 
 .timeline-wrapper {
-    padding: 80px 0;
+    padding: 50px 20px 0 0;
 }
 
 .container {
@@ -214,7 +214,7 @@ p {
     text-align: center;
     color: #473a43;
     font-weight: 600;
-    margin-top: 80px;
+    margin-top: 10px;
     font-size: 24px;
 }
 
@@ -225,7 +225,7 @@ p {
     font-size: 16px;
     max-width: 400px;
     margin-top: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 
@@ -303,17 +303,19 @@ p {
 }
 
 .timeline-footer-title {
+    margin-top: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    gap: 20px;
+    gap: 10px;
     flex-wrap: wrap;
     padding: 0 40px;
 }
 
 .timeline-footer-title div {
     min-width: 200px;
+    height: max-content;
 }
 
 .authentication {

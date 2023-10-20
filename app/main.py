@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 import json
-import datetime
+from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify, session, flash, abort
 from flask_session import Session
 import redis
@@ -37,6 +37,10 @@ if MONGO_CLIENT.admin.command('ping')['ok'] == 1:
     print("Connected to MongoDB Atlas")
 
 
+@app.context_processor
+def inject_now():
+    return {'now': datetime.utcnow()}
+
 @app.after_request
 def add_header(response):
     if not request.path.startswith('/static/') and not request.path.startswith('/contribute') and not request.path.startswith('/edit') and not request.path.startswith('/github/callback') and not request.path.startswith('/authentication') and not request.path.startswith('/logout'):
@@ -46,15 +50,15 @@ def add_header(response):
 
 @app.route('/')
 def index():
-    # session['logged_in'] = True
-    # session['username'] = "test"
-    # session['name'] = "test"
-    # session['email'] = "test"
-    # session['avatar_url'] = "test"
-    # session['contributor'] = True
-    # session['admin'] = True
-    # session['userid'] = "test"
-    # session['avatar_url'] = "https://avatars.githubusercontent.com/u/96434205"
+    session['logged_in'] = True
+    session['username'] = "test"
+    session['name'] = "test"
+    session['email'] = "test"
+    session['avatar_url'] = "test"
+    session['contributor'] = True
+    session['admin'] = True
+    session['userid'] = "test"
+    session['avatar_url'] = "https://avatars.githubusercontent.com/u/96434205"
     century_data = DB.century_data.find().sort("century")
     if century_data is None:
         century_data = []
@@ -303,6 +307,14 @@ def edit_famous_people_data(id):
 
     return jsonify({"status": "success", 'redirect': '/contribute#contribution-history', 'message': 'Your contribution has been submitted for review.'})
 
+@app.route('/contribute/add/<data_type>', methods=['GET'])
+def add(data_type):
+    '''
+    The add page is used to add new data to the database.
+    '''
+    if not session.get('logged_in'):
+        return redirect(url_for('authentication'))
+    return render_template('add.html', data_type=data_type)
 
 
 @app.route('/logout')
