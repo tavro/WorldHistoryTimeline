@@ -182,11 +182,12 @@ p {
     color: #FFFFFF;
     display: inline-block;
     border-radius: 4px;
+    margin: 0 40px;
     padding-left: 8px;
     padding-right: 8px;
     padding-top: 8px;
     padding-bottom: 8px;
-    margin: 0 40px;
+    vertical-align: middle;
 }
 
 .events-wrapper {
@@ -445,6 +446,15 @@ p {
     padding: 0 40px;
 }
 
+.add-timestamp {
+    color: #473a43;
+    margin: 0;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 0px;
+    padding: 0 40px;
+}
+
 .edit-summary {
     color: #473a43;
     margin: 0;
@@ -503,7 +513,7 @@ form textarea {
 }
 
 .source-text-area {
-    width: 50%;
+    width: 70%;
     height: 30px;
     padding: 12px 20px;
     box-sizing: border-box;
@@ -552,7 +562,7 @@ form textarea {
 .source-list ol li p {
     margin: 0;
     box-sizing: border-box;
-    width: 50%;
+    width: 70%;
     word-wrap: break-word;
     font: inherit;
     padding-left: 20px;
@@ -583,6 +593,7 @@ input[type="submit"] {
     padding-top: 8px;
     padding-bottom: 8px;
     margin: 0 40px;
+    font: inherit;
 }
 
 .user-profile-picture, .user-contributions, .faqs-container, .user-information-text {
@@ -865,6 +876,50 @@ input[type="submit"] {
     padding: 10px 20px;
     border: 1px solid #473a43;
     border-radius: 4px;
+}
+
+.add-famous-people-placeholder-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.add-famous-people-form input {
+    margin-left: 40px;
+    border-radius: 4px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    height: 30px;
+    width: 70%;
+    padding-left: 20px;
+    font: inherit;
+    background-color: #f8f8f8;
+}
+
+.add-famous-people-form input[type="file"] {
+    height: auto;
+    border-radius: 4px;
+    width: 70%;
+    margin-left: 0px;
+    padding-left: 0px;
+    background-color: transparent;
+}
+
+.add-famous-people-form input[type="submit"] {
+    height: auto;
+    padding-left: 0px;
+    width: max-content;
+    background-color: #1d1f1c;
+    color: #FFFFFF;
+    display: inline-block;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font: inherit;
 }
 
 ::-webkit-scrollbar {

@@ -7,6 +7,7 @@ from flask_session import Session
 import redis
 import pymongo
 import requests
+import secrets
 from bson.objectid import ObjectId
 
 
@@ -40,6 +41,7 @@ if MONGO_CLIENT.admin.command('ping')['ok'] == 1:
 @app.context_processor
 def inject_now():
     return {'now': datetime.utcnow()}
+
 
 @app.after_request
 def add_header(response):
@@ -159,7 +161,8 @@ def github_callback():
                     break
 
         if DB.users.find_one({"userid": user_data['id']}) is None:
-            DB.users.insert_one({"userid": user_data['id'], "username": user_data['login'], "name": user_data['name'], "email": user_data['email'], "avatar_url": user_data['avatar_url'], "contributor": False, "admin": False})
+            DB.users.insert_one({"userid": user_data['id'], "username": user_data['login'], "name": user_data['name'],
+                                "email": user_data['email'], "avatar_url": user_data['avatar_url'], "contributor": False, "admin": False})
 
         user_info = DB.users.find_one({"email": user_data['email']})
 
@@ -177,9 +180,11 @@ def github_callback():
         print(e)
         return redirect(url_for('authentication'))
 
+
 @app.route('/account')
 def account():
     return redirect(url_for('contribute')), 301
+
 
 @app.route('/contribute')
 def contribute():
@@ -188,7 +193,7 @@ def contribute():
     '''
     if not session.get('logged_in'):
         return redirect(url_for('authentication'))
-    contributions=[]
+    contributions = []
     for contribution in DB.suggestions.find({"contributor": session['userid']}).sort("_id", -1):
         contributions.append(contribution)
     return render_template('contribute.html', contributions=contributions)
@@ -206,7 +211,6 @@ def edit(data_type, id):
 
     if data_type not in ["century", "decade", "year"]:
         abort(404)
-
 
     if data_type == "century":
         data = DB.century_data.find_one({"_id": ObjectId(id)})
@@ -241,6 +245,7 @@ def edit(data_type, id):
 
     return render_template('edit.html', data=data, data_type=data_type, data_time_period=data_time_period, summary=summary, data_id=id)
 
+
 @app.route('/contribute/edit/famous-people/<id>', methods=['GET'])
 def edit_people(id):
     '''
@@ -258,6 +263,7 @@ def edit_people(id):
 
     return render_template('edit_people.html', data=data, data_id=id)
 
+
 @app.route('/edit/<data_type>/<id>', methods=['POST'])
 def edit_data(data_type, id):
     '''
@@ -274,7 +280,7 @@ def edit_data(data_type, id):
 
     if data['summary'] == "":
         abort(400)
-    
+
     if data['sources'] == "":
         abort(400)
 
@@ -283,10 +289,11 @@ def edit_data(data_type, id):
     for source in sources:
         sources_list.append(source)
 
-
-    DB.suggestions.insert_one({"data_type": data_type, "updated_summary": data['summary'], "updated_sources": sources_list, "data_id": id, "contributor": session['userid'], 'status': 'pending', 'contribution_type': 'edit', 'timestamp': datetime.datetime.now().strftime("%d/%m/%Y")})
+    DB.suggestions.insert_one({"data_type": data_type, "updated_summary": data['summary'], "updated_sources": sources_list, "data_id": id,
+                              "contributor": session['userid'], 'status': 'pending', 'contribution_type': 'edit', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
 
     return jsonify({"status": "success", 'redirect': '/contribute#contribution-history', 'message': 'Your contribution has been submitted for review.'})
+
 
 @app.route('/edit/famous-people/<id>', methods=['POST'])
 def edit_famous_people_data(id):
@@ -303,9 +310,11 @@ def edit_famous_people_data(id):
     if data.summary == "":
         abort(400)
 
-    DB.suggestions.insert_one({"data_type": "famous_people", "updated_summary": data.summary, "data_id": id, "contributor": session['userid'], 'status': 'pending', 'contribution_type': 'edit', 'timestamp': datetime.datetime.now().strftime("%d/%m/%Y")})
+    DB.suggestions.insert_one({"data_type": "famous_people", "updated_summary": data.summary, "data_id": id,
+                              "contributor": session['userid'], 'status': 'pending', 'contribution_type': 'edit', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
 
     return jsonify({"status": "success", 'redirect': '/contribute#contribution-history', 'message': 'Your contribution has been submitted for review.'})
+
 
 @app.route('/contribute/add/<data_type>', methods=['GET'])
 def add(data_type):
@@ -314,7 +323,122 @@ def add(data_type):
     '''
     if not session.get('logged_in'):
         return redirect(url_for('authentication'))
-    return render_template('add.html', data_type=data_type)
+
+    if data_type not in ["century", "decade", "year"]:
+        century, decade, year = request.args.get(
+            'century'), request.args.get('decade'), request.args.get('year')
+        if century is None or decade is None or year is None or not century.isdigit() or not decade.isdigit() or not year.isdigit():
+            abort(404)
+        return render_template('add_famous_people.html', century=century, decade=decade, year=year)
+    else:
+        if data_type == "century":
+            century_value = request.args.get('century')
+            if century_value is None or not century_value.isdigit():
+                abort(404)
+            return render_template('add.html', data_type=data_type, century=century_value)
+        elif data_type == "decade":
+            century_value = request.args.get('century')
+            decade_value = request.args.get('decade')
+            if century_value is None or decade_value is None or not century_value.isdigit() or not decade_value.isdigit():
+                abort(404)
+            return render_template('add.html', data_type=data_type, century=century_value, decade=decade_value)
+        elif data_type == "year":
+            century_value = request.args.get('century')
+            decade_value = request.args.get('decade')
+            year_value = request.args.get('year')
+            if century_value is None or decade_value is None or year_value is None or not century_value.isdigit() or not decade_value.isdigit() or not year_value.isdigit():
+                abort(404)
+            return render_template('add.html', data_type=data_type, century=century_value, decade=decade_value, year=year_value)
+        else:
+            abort(404)
+
+
+@app.route('/add/summary/<data_type>', methods=['POST'])
+def add_summary(data_type):
+    '''
+    The add_summary page is used to add new data to the database.
+    '''
+    if not session.get('logged_in'):
+        return redirect(url_for('authentication'))
+
+    data = request.get_json()
+
+    if data['summary'] == "":
+        abort(400)
+    if data['sources'] == "":
+        abort(400)
+
+    sources = json.loads(data['sources'])
+    sources_list = []
+    for source in sources:
+        sources_list.append(source)
+
+    if request.args.get('century') is None or (int(request.args.get('century')) >= (int(datetime.now().strftime("%Y")))):
+        return jsonify({"status": "error", "message": "Editing a future century is not allowed."})
+
+    if data_type == "century":
+        if DB.century_data.find_one({"century": request.args.get('century')}) is not None:
+            return jsonify({"status": "error", "message": "Century already exists, please edit the existing century."})
+        DB.suggestions.insert_one({"data_type": data_type, "summary": data['summary'], "sources": sources_list, "century": request.args.get(
+            'century'), "contributor": session['userid'], 'status': 'pending', 'contribution_type': 'add', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
+    elif data_type == "decade":
+        if request.args.get('decade') is None:
+            return jsonify({"status": "error", "message": "Invalid value for decade provided"})
+        if DB.decade_data.find_one({"century": request.args.get('century'), "decade": request.args.get('decade')}) is not None:
+            return jsonify({"status": "error", "message": "Decade already exists, please edit the existing decade."})
+        DB.suggestions.insert_one({"data_type": data_type, "summary": data['summary'], "sources": sources_list, "century": request.args.get('century'), "decade": request.args.get(
+            'decade'), "contributor": session['userid'], 'status': 'pending', 'contribution_type': 'add', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
+    elif data_type == "year":
+        if request.args.get('decade') is None or request.args.get('year') is None:
+            return jsonify({"status": "error", "message": "Invalid value for decade or year provided"})
+        if DB.year_data.find_one({"century": request.args.get('century'), "decade": request.args.get('decade'), "year": request.args.get('year')}) is not None:
+            return jsonify({"status": "error", "message": "Year already exists, please edit the existing year."})
+        DB.suggestions.insert_one({"data_type": data_type, "summary": data['summary'], "sources": sources_list, "century": request.args.get('century'), "decade": request.args.get(
+            'decade'), "year": request.args.get('year'), "contributor": session['userid'], 'status': 'pending', 'contribution_type': 'add', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
+    else:
+        return jsonify({"status": "error", "message": "Invalid data type."})
+
+    return jsonify({"status": "success", 'redirect': '/contribute#contribution-history', 'message': 'Your contribution has been submitted for review.'})
+
+
+@app.route('/add/summary/famous-people', methods=['POST'])
+def add_famous_people_summary():
+    '''
+    The add_famous_people_summary page is used to add new data to the database.
+    '''
+    if not session.get('logged_in'):
+        return redirect(url_for('authentication'))
+
+    if request.files.get('image') is None or request.form.get('summary') is None or request.form.get('name') is None or request.form.get('lifetime') is None:
+        return jsonify({"status": "error", "message": "Invalid data provided."})
+
+    if request.form.get('century') is None or request.form.get('decade') is None or request.form.get('year') is None:
+        return jsonify({"status": "error", "message": "Invalid data provided."})
+
+    if len(request.form.get('summary')) > 500:
+        return jsonify({"status": "error", "message": "Summary is too long, it should be less than 500 characters."})
+
+    if len(request.form.get('name')) > 20:
+        return jsonify({"status": "error", "message": "Name is too long, it should be less than 20 characters."})
+
+    if len(request.form.get('lifetime')) > 20:
+        return jsonify({"status": "error", "message": "Lifetime is too long, it should be less than 20 characters."})
+
+    image = request.files.get('image')
+    image_id = secrets.token_hex(8)
+
+    response = requests.post("http://ather.api.projectrexa.dedyn.io/upload", files={'file': image.read()}, data={
+        'key': f'world-history-timeline/images/{image_id}.{image.filename.split(".")[-1]}', 'content_type': image.content_type, 'public': 'true'}, headers={'X-Authorization': os.getenv('ATHER_API_KEY')}, timeout=10).json()
+
+    if response['status'] == "failed":
+        return jsonify({"status": "error", "message": "Failed to upload image, please try again later."})
+
+    image_url = response['access_url']
+
+    DB.suggestions.insert_one({"data_type": "famous_people", "summary": request.form.get('summary'), "name": request.form.get('name'), "lifetime": request.form.get('lifetime'), "image_url": image_url, "century": request.form.get(
+        'century'), "decade": request.form.get('decade'), "year": request.form.get('year'), "contributor": session['userid'], 'status': 'pending', 'contribution_type': 'add', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
+
+    return jsonify({"status": "success", 'redirect': '/contribute#contribution-history', 'message': 'Your contribution has been submitted for review.'})
 
 
 @app.route('/logout')

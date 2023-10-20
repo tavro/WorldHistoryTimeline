@@ -55,7 +55,7 @@
                <div class="event-text d-flex-2">
                   <span>
                      <h6>
-                        <a href="/contribute/add/century?century={% if century_data|length > 0 %}{{ century_data[-1].century | int + 100 }}{% else %}1{% endif %}">AAdd a new century summary</a>
+                        <a href="/contribute/add/century?century={% if century_data|length > 0 %}{{ century_data[-1].century | int + 100 }}{% else %}000{% endif %}">Add a new century summary</a>
                      </h6>
                   </span>
                   <div class="event-circle"></div>

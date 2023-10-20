@@ -49,6 +49,126 @@ function removeSource(callingElement) {
   sourceList.removeChild(li);
 }
 
+function handleAddSummaryForm(event) {
+  event.preventDefault();
+  let summary = document.getElementById("summary").value;
+  if (summary == "") {
+    alert("Summary cannot be empty.");
+    return false;
+  }
+
+  let sourceList = document.getElementById("source-list");
+  if (sourceList.children.length == 0) {
+    alert("Please add at least one source.");
+    return false;
+  }
+  let sources = [];
+  for (let i = 0; i < sourceList.children.length; i++) {
+    sources.push(sourceList.children[i].getAttribute("data-source"));
+  }
+  let sources_string = JSON.stringify(sources);
+
+  let submitURL = document.getElementById("submit-url").value;
+
+  let submitButton = document.getElementById("submit-button");
+  submitButton.disabled = true;
+  submitButton.innerHTML = "Submitting...";
+
+  fetch(submitURL, {
+    method: "POST",
+    body: JSON.stringify({
+      summary: summary,
+      sources: sources_string,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data["status"] == "success") {
+        alert(data["message"]);
+        window.location.href = data["redirect"];
+      } else {
+        alert(data["message"]);
+        submitButton.disabled = false;
+        submitButton.innerHTML = "Submit";
+      }
+    });
+}
+
+if (document.getElementById("add-form-summary")) {
+  document
+    .getElementById("add-form-summary")
+    .addEventListener("submit", handleAddSummaryForm);
+}
+
+function handleAddFamousPeopleSummaryForm(event) {
+  event.preventDefault();
+  let summary = document.getElementById("summary").value;
+  if (summary == "") {
+    alert("Summary cannot be empty.");
+    return false;
+  }
+
+  let name = document.getElementById("name").value;
+  if (name == "") {
+    alert("Name cannot be empty.");
+    return false;
+  }
+  
+  let lifetime = document.getElementById("lifetime").value;
+  if (lifetime == "") {
+    alert("Lifetime cannot be empty.");
+    return false;
+  }
+  
+  // Get the file uploaded
+  let image = document.getElementById("image").files[0];
+  if (image == undefined) {
+    alert("A image is required to be uploaded.");
+    return false;
+  }
+
+  let formData = new FormData();
+  formData.append("summary", summary);
+  formData.append("name", name);
+  formData.append("lifetime", lifetime);
+  formData.append("image", image);
+  formData.append("century", document.getElementById("century").value);
+  formData.append("decade", document.getElementById("decade").value);
+  formData.append("year", document.getElementById("year").value);
+
+  let submitURL = document.getElementById("submit-url").value;
+
+  let submitButton = document.getElementById("submit-button");
+  submitButton.disabled = true;
+  submitButton.innerHTML = "Submitting...";
+  fetch(submitURL, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data["status"] == "success") {
+        alert(data["message"]);
+        window,location.href = data["redirect"];
+      } else {
+        alert(data["message"]);
+        submitButton.disabled = false;
+        submitButton.innerHTML = "Submit";
+        return;
+      }
+    });
+}
+
+if (document.getElementById("add-form-famous-pople-summary")) {
+  document
+    .getElementById("add-form-famous-pople-summary")
+    .addEventListener("submit", handleAddFamousPeopleSummaryForm);
+}
+
+
 function handleSummaryForm(event) {
   event.preventDefault();
   let summary = document.getElementById("summary").value;
@@ -157,15 +277,15 @@ if (document.getElementById("edit-famous-people-form-summary")) {
 const items = document.querySelectorAll(".accordion button");
 
 function toggleAccordion() {
-  const itemToggle = this.getAttribute('aria-expanded');
-  
+  const itemToggle = this.getAttribute("aria-expanded");
+
   for (i = 0; i < items.length; i++) {
-    items[i].setAttribute('aria-expanded', 'false');
+    items[i].setAttribute("aria-expanded", "false");
   }
-  
-  if (itemToggle == 'false') {
-    this.setAttribute('aria-expanded', 'true');
+
+  if (itemToggle == "false") {
+    this.setAttribute("aria-expanded", "true");
   }
 }
 
-items.forEach(item => item.addEventListener('click', toggleAccordion));
+items.forEach((item) => item.addEventListener("click", toggleAccordion));

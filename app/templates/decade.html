@@ -60,7 +60,7 @@
                <div class="event-text d-flex-2">
                   <span>
                      <h6>
-                        <a href="/contribute/add/year?century={{ century }}&decade={{ decade }}&year={% if year_data|length > 0 %}{{ year_data[-1].year | int + 1 }}{% else %}1{% endif %}">Add a new year summary</a>
+                        <a href="/contribute/add/year?century={{ century }}&decade={{ decade }}&year={{'0' if year_data|length == 0 else (year_data[-1].year|int + 1) }}">Add a new year summary</a>
                      </h6>
                   </span>
                   <div class="event-circle"></div>
