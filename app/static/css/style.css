@@ -84,6 +84,7 @@ p {
     padding: 0 10px;
     box-sizing: border-box;
     margin: 0 auto;
+    text-align: left;
 }
 
 .d-flex-2 {
@@ -153,7 +154,7 @@ p {
 .container {
     width: 100%;
     max-width: 1140px;
-    padding: 0 15px;
+    padding: 0 20px;
     box-sizing: border-box;
     margin: 0 auto;
   }
@@ -584,8 +585,8 @@ input[type="submit"] {
     margin: 0 40px;
 }
 
-.user-profile-picture, .user-contributions, .faqs-container {
-    margin-left: 30px !important;
+.user-profile-picture, .user-contributions, .faqs-container, .user-information-text {
+    margin-left: 10px !important;
 } 
 
 .user {
@@ -656,10 +657,10 @@ input[type="submit"] {
 }
 
 .accordion {
-    width: 100%;
-    max-width: 100%;
+    padding: 0 20px 0 0;
     margin: 20px auto;
     font-family: 'Consolas';
+    margin-left: 10px;
 }
 
 .accordion .accordion-item {
@@ -770,11 +771,13 @@ input[type="submit"] {
 }
 
 .user-information {
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: row;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
     font: inherit;
     margin: 20px 10px;
 }
@@ -786,7 +789,6 @@ input[type="submit"] {
     flex-direction: column;
     font: inherit;
     text-align: left;
-    width: 100%;
 }
 
 .user-profile-picture {
