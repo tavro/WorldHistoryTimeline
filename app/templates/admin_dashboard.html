@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <title>World History Timeline</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <link rel="stylesheet" href="/static/css/style.css" />
+      <script src="/static/js/utils.js" defer></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js" defer></script>
+      <link rel="icon"
+         href="https://static.thenounproject.com/png/26949-200.png" />
+   </head>
+   <body>
+      {% include 'header.html' %}
+      <h1 class="contribute-header">General system metrics</h1>
+      <div class="metrics-container">
+         <div class="number-of-users">
+            <h3>Number of users</h3>
+            <p>{{ number_of_users }} signed up users</p>
+        </div>
+        <div class="number-of-contributions">
+            <h3>Number of contributions</h3>
+            <p>{{ number_of_contributions }} contributions</p>
+        </div>
+        </div>
+        <h1 class="contributions-header">Contribution submissions</h1>
+         <div class="contributions-container">
+            <br>
+            <h2>Edit contributions</h2>
+            {% for contribution in contributions %}
+            {% if contribution.contribution_type == "edit" %}
+            <p>{{ contribution }}</p>
+            <div class="contribution">
+               <div class="contribution-header">
+                  <h3>Edited a {% if contribution.data_type == "famous_people" %}famous person's{% else %} {{contribution.data_type}} {% endif %} summary</h3>
+                  <p><b>ID: </b>{{ (contribution._id)}}</p>
+               </div>
+               <br>
+               <div class="original-contribution-body">
+                  <p><b>Original Summary: </b></p>
+                  <p>{{ contribution.original_summary }}</p>
+               </div>
+               <div class="updated-contribution-body">
+                  <p><b>Edited Summary: </b></p>
+                  <p>{{ contribution.updated_summary }}</p>
+               </div>
+               <br>
+
+               <div class="contribution-footer">
+                  <div class="contribution-footer-left">
+                     <p><b>Edited by: </b><a href="/user/{{ contribution.contributor_id }}">@{{ contribution.contributor }}</a></p>
+                  </div>
+                  <div class="contribution-footer-right">
+                     <a href="/admin/contributions/{{ contribution.id }}/approve">
+                        <button class="approve-button">Approve</button>
+                     </a>
+                     <a href="/admin/contributions/{{ contribution.id }}/reject">
+                        <button class="reject-button">Reject</button>
+                     </a>
+                  </div>
+               </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+         </div>
+               <div class="timeline-footer-title" id="contribute">
+                  <div>
+                     <h2>Made by Isak Horvath</h2>
+                     <p class="timeline-footer-paragraph">
+                        This is a hobby project developed by one person with
+                        little to no
+                        free time, if you want to support this or other similar
+                        projects
+                        please visit this
+                        <a href="https://github.com/tavro">GitHub</a> account.
+                     </p>
+                  </div>
+                  <div>
+                     <h2>Contribute to the project</h2>
+                     <p class="timeline-footer-paragraph">
+                        Please feel free to contribute by fact checking and
+                        making the summaries better, you can do this by editing
+                        through our <a href="/contribute">CMS</a> or by
+                        contributing to our <a
+                           href="https://github.com/tavro/WorldHistoryTimeline">GitHub
+                        </a>project.
+                     </div>
+                  </div>
+               </div>
+            </body>
+         </html>

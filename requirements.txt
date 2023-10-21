@@ -4,4 +4,5 @@ redis
 python-dotenv
 Flask-Session
 requests
-pyuploadcare
+Flask-Caching
+Flask-Compress
