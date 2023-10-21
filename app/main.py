@@ -208,7 +208,7 @@ def contribute():
     if not session.get('logged_in'):
         return redirect(url_for('authentication'))
     contributions = []
-    for contribution in DB.suggestions.find({"contributor": session['userid']}).sort("_id", -1):
+    for contribution in DB.suggestions.find({"contributor_id": session['userid']}).sort("_id", -1):
         contributions.append(contribution)
     return render_template('contribute.html', contributions=contributions)
 
@@ -304,16 +304,19 @@ def edit_data(data_type, id):
         sources_list.append(source)
 
     if data_type == "century":
-        original_summary = DB.century_data.find_one({"_id": ObjectId(id)})['summary']
+        original_summary = DB.century_data.find_one(
+            {"_id": ObjectId(id)})['summary']
     elif data_type == "decade":
-        original_summary = DB.decade_data.find_one({"_id": ObjectId(id)})['summary']
+        original_summary = DB.decade_data.find_one(
+            {"_id": ObjectId(id)})['summary']
     elif data_type == "year":
-        original_summary = DB.year_data.find_one({"_id": ObjectId(id)})['summary']
+        original_summary = DB.year_data.find_one(
+            {"_id": ObjectId(id)})['summary']
     else:
         return jsonify({"status": "error", "message": "Invalid form data recived, try again later."})
 
     DB.suggestions.insert_one({"data_type": data_type, "updated_summary": data['summary'], "updated_sources": sources_list, "data_id": id,
-                              "contributor_id": session['userid'], "contributor" : session['username'], 'status': 'pending', 'contribution_type': 'edit', 'timestamp': datetime.now().strftime("%d/%m/%Y"), 'original_summary': original_summary})
+                              "contributor_id": session['userid'], "contributor": session['username'], 'status': 'pending', 'contribution_type': 'edit', 'timestamp': datetime.now().strftime("%d/%m/%Y"), 'original_summary': original_summary})
 
     return jsonify({"status": "success", 'redirect': '/contribute#contribution-history', 'message': 'Your contribution has been submitted for review.'})
 
@@ -333,10 +336,11 @@ def edit_famous_people_data(id):
     if data['summary'] == "":
         abort(400)
 
-    original_summary = DB.famous_people.find_one({"_id": ObjectId(id)})['summary']
+    original_summary = DB.famous_people.find_one(
+        {"_id": ObjectId(id)})['summary']
 
     DB.suggestions.insert_one({"data_type": "famous_people", "updated_summary": data['summary'], "data_id": id,
-                              "contributor_id": session['userid'], "contributor" : session['username'], 'status': 'pending', 'contribution_type': 'edit', 'timestamp': datetime.now().strftime("%d/%m/%Y"), 'original_summary': original_summary})
+                              "contributor_id": session['userid'], "contributor": session['username'], 'status': 'pending', 'contribution_type': 'edit', 'timestamp': datetime.now().strftime("%d/%m/%Y"), 'original_summary': original_summary})
 
     return jsonify({"status": "success", 'redirect': '/contribute#contribution-history', 'message': 'Your contribution has been submitted for review.'})
 
@@ -405,21 +409,21 @@ def add_summary(data_type):
         if DB.century_data.find_one({"century": request.args.get('century')}) is not None:
             return jsonify({"status": "error", "message": "Century already exists, please edit the existing century."})
         DB.suggestions.insert_one({"data_type": data_type, "summary": data['summary'], "sources": sources_list, "century": request.args.get(
-            'century'), "contributor_id": session['userid'], "contributor" : session['username'], 'status': 'pending', 'contribution_type': 'add', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
+            'century'), "contributor_id": session['userid'], "contributor": session['username'], 'status': 'pending', 'contribution_type': 'add', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
     elif data_type == "decade":
         if request.args.get('decade') is None:
             return jsonify({"status": "error", "message": "Invalid value for decade provided"})
         if DB.decade_data.find_one({"century": request.args.get('century'), "decade": request.args.get('decade')}) is not None:
             return jsonify({"status": "error", "message": "Decade already exists, please edit the existing decade."})
         DB.suggestions.insert_one({"data_type": data_type, "summary": data['summary'], "sources": sources_list, "century": request.args.get('century'), "decade": request.args.get(
-            'decade'), "contributor_id": session['userid'], "contributor" : session['username'], 'status': 'pending', 'contribution_type': 'add', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
+            'decade'), "contributor_id": session['userid'], "contributor": session['username'], 'status': 'pending', 'contribution_type': 'add', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
     elif data_type == "year":
         if request.args.get('decade') is None or request.args.get('year') is None:
             return jsonify({"status": "error", "message": "Invalid value for decade or year provided"})
         if DB.year_data.find_one({"century": request.args.get('century'), "decade": request.args.get('decade'), "year": request.args.get('year')}) is not None:
             return jsonify({"status": "error", "message": "Year already exists, please edit the existing year."})
         DB.suggestions.insert_one({"data_type": data_type, "summary": data['summary'], "sources": sources_list, "century": request.args.get('century'), "decade": request.args.get(
-            'decade'), "year": request.args.get('year'), "contributor_id": session['userid'], "contributor" : session['username'], 'status': 'pending', 'contribution_type': 'add', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
+            'decade'), "year": request.args.get('year'), "contributor_id": session['userid'], "contributor": session['username'], 'status': 'pending', 'contribution_type': 'add', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
     else:
         return jsonify({"status": "error", "message": "Invalid data type."})
 
@@ -461,7 +465,7 @@ def add_famous_people_summary():
     image_url = response['access_url']
 
     DB.suggestions.insert_one({"data_type": "famous_people", "summary": request.form.get('summary'), "name": request.form.get('name'), "lifetime": request.form.get('lifetime'), "image_url": image_url, "century": request.form.get(
-        'century'), "decade": request.form.get('decade'), "year": request.form.get('year'), "contributor_id": session['userid'], "contributor" : session['username'], 'status': 'pending', 'contribution_type': 'add', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
+        'century'), "decade": request.form.get('decade'), "year": request.form.get('year'), "contributor_id": session['userid'], "contributor": session['username'], 'status': 'pending', 'contribution_type': 'add', 'timestamp': datetime.now().strftime("%d/%m/%Y")})
 
     return jsonify({"status": "success", 'redirect': '/contribute#contribution-history', 'message': 'Your contribution has been submitted for review.'})
 
@@ -473,8 +477,10 @@ def admin_dashboard():
     '''
     if not session.get('logged_in') or not session.get('admin'):
         abort(404)
-    contributions=DB.suggestions.find({'status': 'pending'}) if DB.suggestions.count_documents({'status': 'pending'}) > 0 else None
+    contributions = DB.suggestions.find({'status': 'pending'}) if DB.suggestions.count_documents({
+        'status': 'pending'}) > 0 else None
     return render_template('admin_dashboard.html', users=DB.users.find(), number_of_users=DB.users.count_documents({}), number_of_contributions=DB.suggestions.count_documents({}), contributions=contributions)
+
 
 @app.route('/user/<user_id>')
 def user(user_id):
@@ -483,13 +489,22 @@ def user(user_id):
     '''
     if not session.get('logged_in'):
         abort(404)
-    if len(user_id) != 24:
+
+    if user_id.isdigit() == False:
         abort(404)
+
+    user = DB.users.find_one({"userid": int(user_id)})
+    print(user)
+    if user is None:
+        abort(404)
+    
+
+
     contributions = []
-    for contribution in DB.suggestions.find({"contributor_id": user_id}).sort("_id", -1):
+    for contribution in DB.suggestions.find({"contributor_id": int(user_id)}).sort("_id", -1):
         contributions.append(contribution)
-    user = DB.users.find_one({"userid": user_id})
     return render_template('profile.html', contributions=contributions, user=user)
+
 
 @app.route('/logout')
 def logout():
