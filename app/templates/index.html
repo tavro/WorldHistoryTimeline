@@ -18,7 +18,7 @@
       <div class="event-text d-flex-2" data-id="{{ century._id }}" data-type="century">
        <span>
         <h6>
-         <a href="/{{ century.century }}">{{ century.century }}</a>
+         <a href="/{{ century.century }}">{{ '%04d' % (century.century | int) }}</a>
         </h6> — {{ century.summary|safe }}
         <br /> Sources: {% for i in range(century.sources|length) %} <a href="{{ century.sources[i] }}">{{ [i] }}</a> {% endfor %} <br /> {% if century.needs_improvement %} <a class="edit-tag" href="#contribute">
          <p class="tag">Needs major improvement</p>
