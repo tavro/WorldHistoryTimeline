@@ -592,7 +592,7 @@ def add_summary(data_type):
         int(request.args.get("century")) >= (int(datetime.now().strftime("%Y")))
     ):
         return jsonify(
-            {"status": "error", "message": "Editing a future century is not allowed."}
+            {"status": "error", "message": "Adding a future century is not allowed."}
         )
 
     if data_type == "century":
@@ -620,7 +620,7 @@ def add_summary(data_type):
             }
         )
     elif data_type == "decade":
-        if request.args.get("decade") is None or int(request.args.get("decade")) > 900:
+        if request.args.get("decade") is None or int(request.args.get("decade")) > 9:
             return jsonify(
                 {"status": "error", "message": "Invalid value for decade provided"}
             )
@@ -654,7 +654,7 @@ def add_summary(data_type):
             }
         )
     elif data_type == "year":
-        if request.args.get("decade") is None or request.args.get("year") is None or (int(request.args.get("decade")) > 900 or int(request.args.get("year")) > 9 or int(request.args.get("year")) < 0
+        if request.args.get("decade") is None or request.args.get("year") is None or (int(request.args.get("decade")) > 9 or int(request.args.get("year")) > 9 or int(request.args.get("year")) < 0
         ):
             return jsonify(
                 {
