@@ -362,8 +362,7 @@ function blockUser(user_id) {
 					response.json().then((data) => {
 						if (data["status"] == "success") {
 							alert(data["message"]);
-							let user = document.getElementById(user_id);
-							user.parentNode.removeChild(user);
+							location.reload();
 						}
 					});
 				} else {

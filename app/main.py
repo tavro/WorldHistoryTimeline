@@ -1065,6 +1065,9 @@ def block_user():
         return jsonify({"status": "error", "message": "Invalid user ID."})
 
     DB.users.update_one({"userid": int(user_id)}, {"$set": {"blocked": True}})
+    DB.suggestions.update_many(
+        {"contributor_id": int(user_id)}, {"$set": {"status": "blocked"}}
+    )
 
     return jsonify({"status": "success", "message": "User blocked."})
 
