@@ -37,8 +37,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
        <path d="m233-80 65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Z" />
       </svg>Contributor
-     </p> {% endif %}
-   </div>
+     </p> {% endif %} </div>
   </div>
   </div> {% if contributions|length > 0 %} <br>
   <h1 class="contribute-header">Your contributions</h1> {% endif %} <div class="user-contributions" id="contribution-history"> {% for contribution in contributions %} <div class="contribution"> {% if contribution.type == "edit" %} <h3>Edited a summary</h3> {% elif contribution.type == "add" %} <h3>Added a summary</h3> {% endif %} <p>
