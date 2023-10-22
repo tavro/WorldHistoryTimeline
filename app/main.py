@@ -977,6 +977,11 @@ def approve_contribution():
         {"_id": ObjectId(contribution_id)}, {"$set": {"status": "approved"}}
     )
 
+    DB.users.update_one(
+        {"userid": contribution["contributor_id"]},
+        {"$set": {"contributor": True}},
+    )
+
     return jsonify({"status": "success", "message": "Contribution approved."})
 
 
