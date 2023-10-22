@@ -39,6 +39,7 @@
       </svg>Contributor
      </p> {% endif %}
    </div>
+  </div>
   </div> {% if contributions|length > 0 %} <br>
   <h1 class="contribute-header">Your contributions</h1> {% endif %} <div class="user-contributions" id="contribution-history"> {% for contribution in contributions %} <div class="contribution"> {% if contribution.type == "edit" %} <h3>Edited a summary</h3> {% elif contribution.type == "add" %} <h3>Added a summary</h3> {% endif %} <p>
      <b>Contribution ID : </b>{{ contribution._id }}
