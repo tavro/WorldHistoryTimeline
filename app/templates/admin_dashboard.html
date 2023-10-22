@@ -27,6 +27,7 @@
       <b>ID: </b>{{ contribution._id }}
      </p>
     </div>
+    <br>
     <div class="original-contribution-body">
      <p>
       <b>Time period: </b> {{contribution.century}}{% if contribution.decade %}-{{ contribution.decade }}{% endif %}{% if contribution.year %}-{{ contribution.year }}{% endif %}
@@ -41,12 +42,19 @@
       <b>Edited Summary: </b>
      </p>
      <p>{{ contribution.updated_summary }}</p>
+     <p><b>Sources: </b></p>
+      <ul class="sources-list">
+        {% for source in contribution.sources %}
+        <li class="source-list-item">{{ source }}</li>
+        {% endfor %} 
+      </ul>
     </div> {% else %} <div class="contribution-header">
      <h3>Edited a {% if contribution.data_type == "famous_people" %}famous person's{% else %} {{contribution.data_type}} {% endif %} summary</h3>
      <p>
       <b>ID: </b>{{ contribution._id }}
      </p>
     </div>
+    <br>
     <div class="contribution-details">
      <div class="contribution-information">
       <div class="original-contribution-body">
@@ -70,6 +78,7 @@
      </div>
     </div> {% endif %} <div class="contribution-footer">
      <div class="contribution-footer-left">
+      <br>
       <p>
        <b>Edited by: </b>
        <a href="/user/{{ contribution.contributor_id }}">@{{ contribution.contributor }}</a> on {{ contribution.timestamp }}
@@ -87,6 +96,7 @@
      <b>ID: </b>{{ contribution._id }}
     </p>
    </div>
+   <br>
    <div class="original-contribution-body">
     <p>
      <b>Time period: </b> {{contribution.century}}{% if contribution.decade %}-{{ contribution.decade }}{% endif %}{% if contribution.year %}-{{ contribution.year }}{% endif %}
@@ -95,12 +105,19 @@
      <b>Summary: </b>
     </p>
     <p>{{ contribution.summary }}</p>
+    <p><b>Sources: </b></p>
+      <ul class="sources-list">
+        {% for source in contribution.sources %}
+        <li class="source-list-item">{{ source }}</li>
+        {% endfor %} 
+      </ul>
    </div> {% else %} <div class="contribution-header">
     <h3>Added a {% if contribution.data_type == "famous_people" %}famous person's{% else %} {{contribution.data_type}} {% endif %} summary</h3>
     <p>
      <b>ID: </b>{{ contribution._id }}
     </p>
    </div>
+   <br>
    <div class="contribution-details">
     <div class="contribution-information">
      <div class="original-contribution-body">
@@ -118,6 +135,7 @@
     </div>
    </div> {% endif %} <div class="contribution-footer">
     <div class="contribution-footer-left">
+      <br>
      <p>
       <b>Added by: </b>
       <a href="/user/{{ contribution.contributor_id }}">@{{ contribution.contributor }}</a> on {{ contribution.timestamp }}

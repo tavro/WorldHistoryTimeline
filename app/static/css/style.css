@@ -998,6 +998,20 @@ input[type="submit"] {
  margin-left: auto;
 }
 
+.sources-list {
+ margin: 0;
+ padding: 0;
+ list-style: none;
+}
+       
+.sources-list li {
+ margin: 0;
+ padding: 0;
+ font-size: 14px;
+ color: #473a43;
+}
+
+
 ::-webkit-scrollbar {
  width: 2px;
  height: 2px;

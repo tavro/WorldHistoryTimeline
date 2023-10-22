@@ -879,6 +879,9 @@ def approve_contribution():
 
     if contribution is None:
         return jsonify({"status": "error", "message": "Invalid contribution ID."})
+    
+    if contribution["status"] != "pending":
+        return jsonify({"status": "error", "message": "Contribution already reviewed."})
 
     if contribution["data_type"] == "century":
         if contribution["contribution_type"] == "add":
