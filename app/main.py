@@ -53,25 +53,6 @@ if MONGO_CLIENT.admin.command("ping")["ok"] == 1:
 def inject_now():
     return {"now": datetime.utcnow()}
 
-
-@app.after_request
-def add_header(response):
-    if (
-        not request.path.startswith("/static/")
-        and not request.path.startswith("/contribute")
-        and not request.path.startswith("/edit")
-        and not request.path.startswith("/github/callback")
-        and not request.path.startswith("/authentication")
-        and not request.path.startswith("/logout")
-    ):
-        response.headers["Cache-Control"] = (
-            "s-maxage=3600, stale-while-revalidate = 3600",
-            "public",
-            "max-age=3600",
-        )
-    return response
-
-
 @app.route("/")
 def index():
     century_data = DB.century_data.find().sort("century")
