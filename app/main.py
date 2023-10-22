@@ -642,7 +642,7 @@ def add_summary(data_type):
             }
         )
     elif data_type == "decade":
-        if request.args.get("decade") is None or int(request.args.get("decade")) >= 90:
+        if request.args.get("decade") is None or int(request.args.get("decade")) > 90:
             return jsonify(
                 {"status": "error", "message": "Invalid value for decade provided"}
             )
@@ -676,7 +676,7 @@ def add_summary(data_type):
             }
         )
     elif data_type == "year":
-        if request.args.get("decade") is None or request.args.get("year") is None or (int(request.args.get("decade")) >= 90 or int(request.args.get("year")) >= 9 or int(request.args.get("year")) < 0
+        if request.args.get("decade") is None or request.args.get("year") is None or (int(request.args.get("decade")) > 90 or int(request.args.get("year")) > 9 or int(request.args.get("year")) < 0
                                                                                       ):
             return jsonify(
                 {
