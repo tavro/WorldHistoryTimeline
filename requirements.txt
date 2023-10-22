@@ -4,5 +4,3 @@ redis
 python-dotenv
 Flask-Session
 requests
-Flask-Caching
-Flask-Compress

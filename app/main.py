@@ -14,8 +14,6 @@ from flask import (
     abort,
 )
 from flask_session import Session
-from flask_compress import Compress
-from flask_caching import Cache
 import redis
 import pymongo
 import requests
@@ -46,19 +44,6 @@ app.config["SESSEION_COOKIE_NAME"] = "X-Identity"
 
 Session(app)
 
-cache = Cache(app, config={
-    'CACHE_TYPE': 'simple',
-    'CACHE_DEFAULT_TIMEOUT': 60*60
-})
-
-def get_cache_key(request):
-    return request.url
-
-compress = Compress()
-compress.init_app(app)
-
-compress.cache = cache
-compress.cache_key = get_cache_key
 
 if MONGO_CLIENT.admin.command("ping")["ok"] == 1:
     print("Connected to MongoDB Atlas")
@@ -635,7 +620,7 @@ def add_summary(data_type):
             }
         )
     elif data_type == "decade":
-        if request.args.get("decade") is None:
+        if request.args.get("decade") is None or int(request.args.get("decade")) > 900:
             return jsonify(
                 {"status": "error", "message": "Invalid value for decade provided"}
             )
@@ -669,7 +654,8 @@ def add_summary(data_type):
             }
         )
     elif data_type == "year":
-        if request.args.get("decade") is None or request.args.get("year") is None:
+        if request.args.get("decade") is None or request.args.get("year") is None or (int(request.args.get("decade")) > 900 or int(request.args.get("year")) > 9 or int(request.args.get("year")) < 0
+        ):
             return jsonify(
                 {
                     "status": "error",
