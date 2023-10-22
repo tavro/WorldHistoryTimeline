@@ -44,7 +44,7 @@
      <p>{{ contribution.updated_summary }}</p>
      <p><b>Sources: </b></p>
       <ul class="sources-list">
-        {% for source in contribution.sources %}
+        {% for source in contribution.updated_sources %}
         <li class="source-list-item">{{ source }}</li>
         {% endfor %} 
       </ul>
