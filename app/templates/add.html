@@ -1,77 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <title>World History Timeline</title>
-      <meta name="viewport" content="width=device-width,initial-scale=1" />
-      <link rel="stylesheet" href="/static/css/style.css" />
-      <link
-         rel="icon"
-         href="https://static.thenounproject.com/png/26949-200.png"
-         />
-      <script src="/static/js/utils.js" defer></script>
-      <script>
-         document.addEventListener('DOMContentLoaded', function() {
-           document.querySelector('form').addEventListener('keypress', function(e) {
-             if (e.key === 'Enter') {
-               e.preventDefault();
-             }
-           });
-         });
-      </script>
-   </head>
-   <body>
-      {% include 'header.html' %}
-      <div class="timeline-wrapper">
-         {% if data_type != "famous_people" %}
-         <h2 class="edit-heading">Adding new {{data_type}} summary</h2>
-         <h4 class="add-timestamp">({{ century if data_type == "century" else century ~ '-' ~ decade if data_type == "decade" else century ~ '-' ~ decade ~ '-' ~ year }})</h4>
-         <br>
-         <form id="add-form-summary">
-            <input type="hidden" id="submit-url" value="/add/summary/{{data_type}}?century={{century}}&decade={{decade}}&year={{year}}" />
-            <label for="summary"><b>Add summary:</b></label><br>
-            <div class="summary-input">
-               <textarea class="summary-text-area" id="summary" name="summary" rows="10" cols="50">{{summary}}</textarea><br>
-            </div>
-            <label for="source"><b>Sources:</b></label><br>
-            <div class="source-input">
-               <input type="text" id="source" name="source" class="source-text-area" ><br>
-               <button type="button" onclick="addSource()">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-                     <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
-                  </svg>
-               </button>
-            </div>
-            <div class="source-list">
-               <ol id="source-list">
-               </ol>
-            </div>
-            <br>
-            <input type="submit" value="Submit For Review" id="submit-button" />
-         </form>
-         {% endif %}
-      </div>
-      <div class="timeline-footer-title" id="contribute">
-         <div>
-            <h2>Made by Isak Horvath</h2>
-            <p class="timeline-footer-paragraph">
-               This is a hobby project developed by one person with little to no
-               free time, if you want to support this or other similar projects
-               please visit this
-               <a href="https://github.com/tavro">GitHub</a> account.
-            </p>
-         </div>
-         <div>
-            <h2>Contribute to the project</h2>
-            <p class="timeline-footer-paragraph">
-               Please feel free to contribute by fact checking and making the
-               summaries better, you can do this by editing through our
-               <a href="/contribute">CMS</a> or by contributing to our
-               <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a
-                  >project.
-            </p>
-         </div>
-      </div>
-      </div>
-   </body>
+ <head>
+  <meta charset="UTF-8" />
+  <title>World History Timeline</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="icon" href="https://static.thenounproject.com/png/26949-200.png" />
+  <script src="/static/js/utils.js" defer></script>
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('form').addEventListener('keypress', function(e) {
+     if (e.key === 'Enter') {
+      e.preventDefault();
+     }
+    });
+   });
+  </script>
+ </head>
+ <body> {% include 'header.html' %} <div class="timeline-wrapper"> {% if data_type != "famous_people" %} <h2 class="edit-heading">Adding new {{data_type}} summary</h2>
+   <h4 class="add-timestamp">({{ century if data_type == "century" else century ~ '-' ~ decade if data_type == "decade" else century ~ '-' ~ decade ~ '-' ~ year }})</h4>
+   <br>
+   <form id="add-form-summary">
+    <input type="hidden" id="submit-url" value="/add/summary/{{data_type}}?century={{century}}&decade={{decade}}&year={{year}}" />
+    <label for="summary">
+     <b>Add summary:</b>
+    </label>
+    <br>
+    <div class="summary-input">
+     <textarea class="summary-text-area" id="summary" name="summary" rows="10" cols="50">{{summary}}</textarea>
+     <br>
+    </div>
+    <label for="source">
+     <b>Sources:</b>
+    </label>
+    <br>
+    <div class="source-input">
+     <input type="text" id="source" name="source" class="source-text-area">
+     <br>
+     <button type="button" onclick="addSource()">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+       <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+      </svg>
+     </button>
+    </div>
+    <div class="source-list">
+     <ol id="source-list"></ol>
+    </div>
+    <br>
+    <input type="submit" value="Submit For Review" id="submit-button" />
+   </form> {% endif %}
+  </div>
+  <div class="timeline-footer-title" id="contribute">
+   <div>
+    <h2>Made by Isak Horvath</h2>
+    <p class="timeline-footer-paragraph"> This is a hobby project developed by one person with little to no free time, if you want to support this or other similar projects please visit this <a href="https://github.com/tavro">GitHub</a> account. </p>
+   </div>
+   <div>
+    <h2>Contribute to the project</h2>
+    <p class="timeline-footer-paragraph"> Please feel free to contribute by fact checking and making the summaries better, you can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project. </p>
+   </div>
+  </div>
+  </div>
+ </body>
 </html>

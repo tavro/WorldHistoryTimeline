@@ -1,90 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <title>World History Timeline</title>
-      <meta name="viewport" content="width=device-width,initial-scale=1" />
-      <link rel="stylesheet" href="/static/css/style.css" />
-      <script src="/static/js/utils.js" defer></script>
-      <script src="https://code.jquery.com/jquery-3.2.1.min.js" defer></script>
-      <link rel="icon"
-         href="https://static.thenounproject.com/png/26949-200.png" />
-   </head>
-   <body>
-      {% include 'header.html' %}
-      <h1 class="contribute-header">User information</h1>
-      <div class="user-information">
-         <div class="user-profile-picture">
-            <img src={{user.avatar_url}} alt={{user.username}} avatar
-               class="user-avatar" />
-
-         </div>
-         <div class="user-information-text">
-            <p class="user-id" id="user-id"><b>User ID : </b>{{user.userid}}</p>
-            <p class="user-name"><b>Username : </b><a
-                  href="https://github.com/{{ user.username }}">@{{
-                  user.username }}</a></p>
-            {% if session.admin  or session.userid == user.userid %}
-            <p class="user-login-method"><b>Login method : </b>GitHub</p>
-            <p class="user-email"><b>Email : </b>{{user.email}}</p>
-            {% endif %}
-            <div class="user-badges">
-               {% if user.admin %}
-               <p class="admin-badge"><svg xmlns="http://www.w3.org/2000/svg"
-                     height="24" viewBox="0 -960 960 960" width="24"><path
-                        d="M480-440q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0-80q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0 440q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-400Zm0-315-240 90v189q0 54 15 105t41 96q42-21 88-33t96-12q50 0 96 12t88 33q26-45 41-96t15-105v-189l-240-90Zm0 515q-36 0-70 8t-65 22q29 30 63 52t72 34q38-12 72-34t63-52q-31-14-65-22t-70-8Z" /></svg>Admin</p>
-               {% endif %}
-               {% if user.contributor %}
-               <p class="user-contributor-badge"><svg
-                     xmlns="http://www.w3.org/2000/svg" height="24"
-                     viewBox="0 -960 960 960" width="24"><path
-                        d="m233-80 65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Z" /></svg>Contributor</p>
-               {% endif %}
-            </div>
-         </div>
-      </div>
-      {% if contributions|length > 0 %}
-      <br>
-      <h1 class="contribute-header">User contributions</h1>
-      {% endif %}
-      <div class="user-contributions" id="contribution-history">
-         {% for contribution in contributions %}
-         <div class="contribution">
-            {% if contribution.type == "edit" %}
-            <h3>Edited a summary</h3>
-            {% elif contribution.type == "add" %}
-            <h3>Added a summary</h3>
-            {% endif %}
-            <p><b>Contribution ID : </b>{{ contribution._id }}</p>
-            <p><b>Status : </b>{{ contribution.status.title() }}</p>
-            <p><b>Timestamp : </b>{{ contribution.timestamp }}</p>
-         </div>
-         {% endfor %}
-      </div>
-      <br>
-               <div class="timeline-footer-title" id="contribute">
-                  <div>
-                     <h2>Made by Isak Horvath</h2>
-                     <p class="timeline-footer-paragraph">
-                        This is a hobby project developed by one person with
-                        little to no
-                        free time, if you want to support this or other similar
-                        projects
-                        please visit this
-                        <a href="https://github.com/tavro">GitHub</a> account.
-                     </p>
-                  </div>
-                  <div>
-                     <h2>Contribute to the project</h2>
-                     <p class="timeline-footer-paragraph">
-                        Please feel free to contribute by fact checking and
-                        making the summaries better, you can do this by editing
-                        through our <a href="/contribute">CMS</a> or by
-                        contributing to our <a
-                           href="https://github.com/tavro/WorldHistoryTimeline">GitHub
-                        </a>project.
-                     </div>
-                  </div>
-               </div>
-            </body>
-         </html>
+ <head>
+  <meta charset="UTF-8" />
+  <title>World History Timeline</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <script src="/static/js/utils.js" defer></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" defer></script>
+  <link rel="icon" href="https://static.thenounproject.com/png/26949-200.png" />
+ </head>
+ <body> {% include 'header.html' %} <h1 class="contribute-header">User information</h1>
+  <div class="user-information">
+   <div class="user-profile-picture">
+    <img src={{user.avatar_url}} alt={{user.username}} avatar class="user-avatar" />
+   </div>
+   <div class="user-information-text">
+    <p class="user-id" id="user-id">
+     <b>User ID : </b>{{user.userid}}
+    </p>
+    <p class="user-name">
+     <b>Username : </b>
+     <a href="https://github.com/{{ user.username }}">@{{ user.username }}</a>
+    </p> {% if session.admin  or session.userid == user.userid %} <p class="user-login-method">
+     <b>Login method : </b>GitHub
+    </p>
+    <p class="user-email">
+     <b>Email : </b>{{user.email}}
+    </p> {% endif %} <div class="user-badges"> {% if user.admin %} <p class="admin-badge">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+       <path d="M480-440q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0-80q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0 440q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-400Zm0-315-240 90v189q0 54 15 105t41 96q42-21 88-33t96-12q50 0 96 12t88 33q26-45 41-96t15-105v-189l-240-90Zm0 515q-36 0-70 8t-65 22q29 30 63 52t72 34q38-12 72-34t63-52q-31-14-65-22t-70-8Z" />
+      </svg>Admin
+     </p> {% endif %} {% if user.contributor %} <p class="user-contributor-badge">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+       <path d="m233-80 65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Z" />
+      </svg>Contributor
+     </p> {% endif %} </div>
+   </div>
+  </div> {% if contributions|length > 0 %} <br>
+  <h1 class="contribute-header">User contributions</h1> {% endif %} <div class="user-contributions" id="contribution-history"> {% for contribution in contributions %} <div class="contribution"> {% if contribution.type == "edit" %} <h3>Edited a summary</h3> {% elif contribution.type == "add" %} <h3>Added a summary</h3> {% endif %} <p>
+     <b>Contribution ID : </b>{{ contribution._id }}
+    </p>
+    <p>
+     <b>Status : </b>{{ contribution.status.title() }}
+    </p>
+    <p>
+     <b>Timestamp : </b>{{ contribution.timestamp }}
+    </p>
+   </div> {% endfor %} </div>
+  <br>
+  <div class="timeline-footer-title" id="contribute">
+   <div>
+    <h2>Made by Isak Horvath</h2>
+    <p class="timeline-footer-paragraph"> This is a hobby project developed by one person with little to no free time, if you want to support this or other similar projects please visit this <a href="https://github.com/tavro">GitHub</a> account. </p>
+   </div>
+   <div>
+    <h2>Contribute to the project</h2>
+    <p class="timeline-footer-paragraph"> Please feel free to contribute by fact checking and making the summaries better, you can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project.
+   </div>
+  </div>
+  </div>
+ </body>
+</html>

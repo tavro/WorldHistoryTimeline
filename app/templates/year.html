@@ -1,81 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <title>{{century}}/{{decade}}/{{year}} - World History Timeline</title>
-      <meta name="viewport" content="width=device-width,initial-scale=1" />
-      <link rel="stylesheet" href="/static/css/style.css" />
-      <link
-         rel="icon"
-         href="https://static.thenounproject.com/png/26949-200.png"
-         />
-   </head>
-   <body>
-      {% include 'header.html' %}
-      <div class="summary">
-         <h2>{{year}}</h2>
-         <p>{{year_summary}}</p>
-         <div class="back"><a href="/{{century}}/{{decade}}">go back</a></div>
-      </div>
-      <div class="categories">
-         <div class="category">
-            <h3>Important People</h3>
-            <hr />
-            <div class="info-boxes">
-               {% for person in famous_people %}
-               <div class="info-box" data-id="{{person._id}}" data-type="person">
-                  <h4>{{person.name}}</h4>
-                  <hr />
-                  <img src="{{person.image}}" height="172px" width="172px" />
-                  <p><b>Lifetime:</b> {{person.lifetime}}</p>
-                  <p class="people_summary"><b>Summary:</b> {{person.summary}}</p>
-                  {% if session.logged_in %}
-                  <a
-                     class="edit-tag-people"
-                     href="/contribute/edit/famous-people/{{ person._id }}"
-                     >
-                     <p>Edit</p>
-                  </a>
-                  {% endif %}
-               </div>
-               {% endfor %}
-               {% if session.logged_in %}
-               <div class="info-box" data-type="add-person">
-                  <h4>Add a person</h4>
-                  <hr />
-                  <img src="https://cdn.projectrexa.dedyn.io/world-history-timeline/images/silhouette.png" height="172px" width="172px" />
-                  <p><b>Lifetime:</b> ???? - ???? </p>
-                  <p class="people_summary"><b>Summary:</b> Find a person that is missing from this year and want to add it to the timeline, please do so by clicking the button below.</p>
-                  <a
-                     class="edit-tag-people"
-                     href="/contribute/add/famous-people?century={{century}}&decade={{decade}}&year={{year}}"
-                     >
-                     <p>Add</p>
-                  </a>
-               </div>
-               {% endif %}
-
-               
-            </div>
-         </div>
-      </div>
-      <div class="timeline-footer-title" id="contribute">
-         <div>
-            <h2>Made by Isak Horvath</h2>
-            <p class="timeline-footer-paragraph">
-               This is a hobby project developed by one person with little to no
-               free time, if you want to support this or other similar projects
-               please visit this
-               <a href="https://github.com/tavro">GitHub</a> account.
-            </p>
-         </div>
-         <div>
-            <h2>Contribute to the project</h2>
-            <p class="timeline-footer-paragraph">
-               Please feel free to contribute by fact-checking and making the summaries better. You can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project.
-            </p>
-         </div>
-      </div>
-      </div>
-   </body>
+ <head>
+  <meta charset="UTF-8" />
+  <title>{{century}}/{{decade}}/{{year}} - World History Timeline</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="icon" href="https://static.thenounproject.com/png/26949-200.png" />
+ </head>
+ <body> {% include 'header.html' %} <div class="summary">
+   <h2>{{year}}</h2>
+   <p>{{year_summary}}</p>
+   <div class="back">
+    <a href="/{{century}}/{{decade}}">go back</a>
+   </div>
+  </div>
+  <div class="categories">
+   <div class="category">
+    <h3>Important People</h3>
+    <hr />
+    <div class="info-boxes"> {% for person in famous_people %} <div class="info-box" data-id="{{person._id}}" data-type="person">
+      <h4>{{person.name}}</h4>
+      <hr />
+      <img src="{{person.image}}" height="172px" width="172px" />
+      <p>
+       <b>Lifetime:</b> {{person.lifetime}}
+      </p>
+      <p class="people_summary">
+       <b>Summary:</b> {{person.summary}}
+      </p> {% if session.logged_in %} <a class="edit-tag-people" href="/contribute/edit/famous-people/{{ person._id }}">
+       <p>Edit</p>
+      </a> {% endif %}
+     </div> {% endfor %} {% if session.logged_in %} <div class="info-box" data-type="add-person">
+      <h4>Add a person</h4>
+      <hr />
+      <img src="https://cdn.projectrexa.dedyn.io/world-history-timeline/images/silhouette.png" height="172px" width="172px" />
+      <p>
+       <b>Lifetime:</b> ???? - ????
+      </p>
+      <p class="people_summary">
+       <b>Summary:</b> Find a person that is missing from this year and want to add it to the timeline, please do so by clicking the button below.
+      </p>
+      <a class="edit-tag-people" href="/contribute/add/famous-people?century={{century}}&decade={{decade}}&year={{year}}">
+       <p>Add</p>
+      </a>
+     </div> {% endif %} </div>
+   </div>
+  </div>
+  <div class="timeline-footer-title" id="contribute">
+   <div>
+    <h2>Made by Isak Horvath</h2>
+    <p class="timeline-footer-paragraph"> This is a hobby project developed by one person with little to no free time, if you want to support this or other similar projects please visit this <a href="https://github.com/tavro">GitHub</a> account. </p>
+   </div>
+   <div>
+    <h2>Contribute to the project</h2>
+    <p class="timeline-footer-paragraph"> Please feel free to contribute by fact-checking and making the summaries better. You can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project. </p>
+   </div>
+  </div>
+  </div>
+ </body>undefined
 </html>
