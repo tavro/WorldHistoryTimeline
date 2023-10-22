@@ -79,7 +79,8 @@ def index():
         century_data = []
     else:
         century_data = sorted(century_data, key=lambda k: int(k["century"]))
-    resposne = make_response(render_template("index.html", century_data=century_data))
+    resposne = make_response(render_template(
+        "index.html", century_data=century_data))
     return resposne
 
 
@@ -169,7 +170,8 @@ def github_callback():
     try:
         response = requests.post(
             "https://github.com/login/oauth/access_token?client_id={}&client_secret={}&code={}".format(
-                os.getenv("GITHUB_CLIENT_ID"), os.getenv("GITHUB_CLIENT_SECRET"), code
+                os.getenv("GITHUB_CLIENT_ID"), os.getenv(
+                    "GITHUB_CLIENT_SECRET"), code
             ),
             headers={"Accept": "application/json"},
             timeout=5,
@@ -211,6 +213,11 @@ def github_callback():
                 }
             )
 
+        if DB.users.find_one({"userid": user_data["id"]})["username"] == "tavro":
+            DB.users.update_one(
+                {"userid": user_data["id"]}, {"$set": {"admin": True}}
+            )
+            
         if DB.users.find_one({"userid": user_data["id"]})["blocked"] is True:
             return redirect(url_for("authentication"))
 
@@ -333,6 +340,15 @@ def edit_data(data_type, id):
     if len(id) != 24:
         abort(404)
 
+    if DB.users.find_one({"userid": session["userid"]})["blocked"] is True:
+        session.clear()
+        return jsonify(
+            {
+                "status": "error",
+                "message": "You have been blocked from contributing.",
+            }
+        )
+
     data = request.get_json()
 
     print(data["summary"])
@@ -349,7 +365,8 @@ def edit_data(data_type, id):
         sources_list.append(source)
 
     if data_type == "century":
-        original_summary = DB.century_data.find_one({"_id": ObjectId(id)})["summary"]
+        original_summary = DB.century_data.find_one(
+            {"_id": ObjectId(id)})["summary"]
         DB.suggestions.insert_one(
             {
                 "data_type": data_type,
@@ -366,7 +383,8 @@ def edit_data(data_type, id):
             }
         )
     elif data_type == "decade":
-        original_summary = DB.decade_data.find_one({"_id": ObjectId(id)})["summary"]
+        original_summary = DB.decade_data.find_one(
+            {"_id": ObjectId(id)})["summary"]
         DB.suggestions.insert_one(
             {
                 "data_type": data_type,
@@ -384,7 +402,8 @@ def edit_data(data_type, id):
             }
         )
     elif data_type == "year":
-        original_summary = DB.year_data.find_one({"_id": ObjectId(id)})["summary"]
+        original_summary = DB.year_data.find_one(
+            {"_id": ObjectId(id)})["summary"]
         DB.suggestions.insert_one(
             {
                 "data_type": data_type,
@@ -428,6 +447,15 @@ def edit_famous_people_data(id):
         return redirect(url_for("authentication"))
     if len(id) != 24:
         abort(404)
+
+    if DB.users.find_one({"userid": session["userid"]})["blocked"] is True:
+        session.clear()
+        return jsonify(
+            {
+                "status": "error",
+                "message": "You have been blocked from contributing.",
+            }
+        )
 
     data = request.get_json()
 
@@ -541,22 +569,6 @@ def add(data_type):
         else:
             abort(404)
 
-
-def add_summary(data_type):
-    """
-    The add_summary page is used to add new data to the database.
-
-    Args:
-    - data_type (str): The type of data being added (century, decade, or year).
-
-    Returns:
-    - If the user is not logged in, redirects to the authentication page.
-    - If the summary or sources fields are empty, aborts with a 400 error.
-    - If the century being edited is in the future, returns an error message.
-    - If the century, decade, or year already exists, returns an error message.
-    - If the data type is invalid, returns an error message.
-    - Otherwise, adds the new data to the suggestions collection in the database and returns a success message.
-    """
 @app.route("/add/summary/<data_type>", methods=["POST"])
 def add_summary(data_type):
     """
@@ -576,6 +588,15 @@ def add_summary(data_type):
     if not session.get("logged_in"):
         return redirect(url_for("authentication"))
 
+    if DB.users.find_one({"userid": session["userid"]})["blocked"] is True:
+        session.clear()
+        return jsonify(
+            {
+                "status": "error",
+                "message": "You have been blocked from contributing.",
+            }
+        )
+
     data = request.get_json()
 
     if data["summary"] == "":
@@ -589,7 +610,8 @@ def add_summary(data_type):
         sources_list.append(source)
 
     if request.args.get("century") is None or (
-        int(request.args.get("century")) >= (int(datetime.now().strftime("%Y")))
+        int(request.args.get("century")) >= (
+            int(datetime.now().strftime("%Y")))
     ):
         return jsonify(
             {"status": "error", "message": "Adding a future century is not allowed."}
@@ -655,7 +677,7 @@ def add_summary(data_type):
         )
     elif data_type == "year":
         if request.args.get("decade") is None or request.args.get("year") is None or (int(request.args.get("decade")) > 9 or int(request.args.get("year")) > 9 or int(request.args.get("year")) < 0
-        ):
+                                                                                      ):
             return jsonify(
                 {
                     "status": "error",
@@ -712,6 +734,15 @@ def add_famous_people_summary():
     """
     if not session.get("logged_in"):
         return redirect(url_for("authentication"))
+
+    if DB.users.find_one({"userid": session["userid"]})["blocked"] is True:
+        session.clear()
+        return jsonify(
+            {
+                "status": "error",
+                "message": "You have been blocked from contributing.",
+            }
+        )
 
     if (
         request.files.get("image") is None
@@ -816,8 +847,10 @@ def admin_dashboard():
         if DB.suggestions.count_documents({"status": "pending"}) > 0
         else None
     )
-    number_of_edits = DB.suggestions.count_documents({"contribution_type": "edit"})
-    number_of_additions = DB.suggestions.count_documents({"contribution_type": "add"})
+    number_of_edits = DB.suggestions.count_documents(
+        {"contribution_type": "edit"})
+    number_of_additions = DB.suggestions.count_documents(
+        {"contribution_type": "add"})
     return render_template(
         "admin_dashboard.html",
         users=DB.users.find(),
@@ -879,7 +912,7 @@ def approve_contribution():
 
     if contribution is None:
         return jsonify({"status": "error", "message": "Invalid contribution ID."})
-    
+
     if contribution["status"] != "pending":
         return jsonify({"status": "error", "message": "Contribution already reviewed."})
 
