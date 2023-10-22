@@ -20,7 +20,7 @@
       <div class="event-text d-flex-2" data-id="{{ decade._id }}" data-type="decade">
        <span>
         <h6>
-         <a href="../{{ century }}/{{ decade.decade }}">{{ decade.decade }}
+         <a href="../{{ century }}/{{ decade.decade }}">{{ '%02d' % (decade.decade|int) }}
          </a>
         </h6> — {{ decade.summary|safe }}
         <br /> Sources: {% for i in range(decade.sources|length) %} <a href="{{ decade.sources[i] }}">{{ [i] }}</a> {% endfor %} <br /> {% if decade.needs_improvement %} <a class="edit-tag" href="#contribute">

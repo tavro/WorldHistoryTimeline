@@ -8,8 +8,9 @@
   <link rel="icon" href="/static/images/favicon.svg" />
  </head>
  <body> {% include 'header.html' %} <div class="summary">
-   <h2>{{year}}</h2>
-   <p>{{year_summary}}</p>
+   <h2>{{year|int}}</h2>
+   <br>
+   <p class = "year-summary-text">{{year_summary}}</p>
    <div class="back">
     <a href="/{{century}}/{{decade}}">go back</a>
    </div>

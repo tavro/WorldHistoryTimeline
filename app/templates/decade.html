@@ -10,7 +10,7 @@
  <body> {% include 'header.html' %} <div class="timeline-wrapper">
    <div class="container">
     <div class="timeline-title">
-     <h2>{{'%02d' % ((decade|int)) }} - {{'%02d' % ((decade|int) + 9) }}
+     <h2>{{'%01d' % ((decade|int)) }} - {{'%01d' % ((decade|int) + 9) }}
      </h2>
      <div class="back">
       <a href="../{{ century }}">go back</a>
@@ -21,7 +21,7 @@
       <div class="event-text d-flex-2" data-id="{{ year._id }}" data-type="year">
        <span>
         <h6>
-         <a href="../{{ century }}/{{ decade }}/{{ year.year }}">{{ year.year }}
+         <a href="../{{ century }}/{{ decade }}/{{ year.year }}">{{ '%01d' % (year.year|int) }}
          </a>
         </h6> — {{ year.summary|safe }}
         <br /> Sources: {% for i in range(year.sources|length) %} <a href="{{ year.sources[i] }}">{{ [i] }}</a> {% endfor %} <br /> {% if year.needs_improvement %} <a class="edit-tag" href="#contribute">

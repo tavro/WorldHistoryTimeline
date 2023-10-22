@@ -139,7 +139,6 @@ p {
 
 .summary h2 {
  font-size: 32px;
- padding-top: 80px;
 }
 
 .category {
@@ -1011,6 +1010,11 @@ input[type="submit"] {
  color: #473a43;
 }
 
+.year-summary-text {
+    padding: 0 40px;
+    font-size: 14px;
+    color: #473a43;
+}
 
 ::-webkit-scrollbar {
  width: 2px;
