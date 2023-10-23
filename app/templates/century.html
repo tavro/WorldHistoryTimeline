@@ -10,7 +10,7 @@
  <body> {% include 'header.html' %} <div class="timeline-wrapper">
    <div class="container">
     <div class="timeline-title">
-     <h2>{{ '%03d' % (century | int) }} - {{'%03d' % ((century|int) + 99) }} </h2>
+     <h2>{{ '%02d' % (century | int) }} - {{'%02d' % ((century|int) + 99) }} </h2>
      <div class="back">
       <a href="../">go back</a>
      </div>
