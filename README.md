@@ -1,67 +1,57 @@
-# World History Timeline
+# Welcome to the World History Timeline Project 🌍📜
 
-## contributing
+## Contributing to Our Historical Journey
 
-every kind of contribution is highly appreciated no matter how small or big.
+We wholeheartedly appreciate any and all contributions to our World History Timeline project, no matter the size or scope.
 
-### how to contribute
+### How to Contribute
 
-1. fork the repo.
-   * click the fork button located somewhere in the top right corner
-2. implement your contribution.
-   * for beginners i would recommend editing files directly through the UI
-3. submit a pull request against the `master` branch!
-   * GitHub's [official instructions](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) for making pull requests
+1. **Fork the Repository:** Click on the "Fork" button located in the top right corner to create your copy of the project.
 
-i try to keep this project easy to navigate for everyone, not only people
-with programming experience. if you find this project hard or confusing to
-navigate please let me know and i will try to fix it.
+2. **Implement Your Contribution:** For those who are new to this, you can start by making edits directly through the user-friendly interface.
 
-for now the best way to contribute would be to improve and write summaries
-for all decades, you can find all summaries in the 'summaries'-folder. these should
-be fairly easy to understand and edit.
+3. **Submit a Pull Request:** After making your improvements, submit a pull request against the `master` branch. If you're new to pull requests, GitHub's [official instructions](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) can guide you through the process.
 
-#### contributing with summaries
+We've designed this project to be accessible for everyone, regardless of their programming experience. If you encounter any difficulties in navigating or contributing to this project, please don't hesitate to reach out. We're here to help!
 
-i've written a very simple [markup language](https://github.com/tavro/WHT-markup) for making the process of writing summaries a little easier.
+### Contributing with Summaries
 
-if you want to edit a summary do the following:
-  * go to [WorldHistoryTimeline/summaries/markup/](https://github.com/tavro/WorldHistoryTimeline/tree/main/summaries/markup) and find the file you want to edit
-  * follow the syntax listed in this [file](https://github.com/tavro/WHT-markup/blob/main/README.md)
+With our CMS, you can efficiently create and edit summaries, making the contribution process even more straightforward. For detailed instructions, please refer to our [Contribution Guide](/CONTRIBUTING.md). Happy editing! 📝🌟
 
-### rules
+### Contribution Rules
 
-* **do** conform to existing coding style.
-* will be expanded if needed.
+- Please adhere to the existing coding style.
 
-## contributions :trophy:
-* [Lolle Dalbo](https://github.com/Skaparen)
-    * added various summaries
-    * made beautiful back button
-* [Parslie](https://github.com/parslie)
-    * fixed footer section styling
+We may expand these rules as needed.
 
-## todo :clipboard:
-* design and user experience improvements
+## Contributions 🏆
 
-the rest is made into issues and moved to this [board](https://github.com/users/tavro/projects/2/views/1)
+We are immensely grateful to the following contributors:
 
-## ideas :bulb:
-* add CMS to make the contribution process easier
-    * add markup language to easily format text
+- [Lolle Dalbo](https://github.com/Skaparen)
+  - Added various summaries
+  - Enhanced the appearance of the back button
+- [Parslie](https://github.com/parslie)
+  - Improved the styling of the footer section
 
-    maybe make my own markup suitable for this
+## Upcoming Tasks 📋
 
-    * alternatively use server side html and includes
+Our to-do list includes:
 
-    example on includes:
-    ```
-    <div include-HTML="./[century]-summary.html"></div>
-    ```
+- Design and user experience improvements
 
-* group people by region, relations and so on
+Additional tasks have been organized into issues on our [project board](https://github.com/users/tavro/projects/2/views/1).
 
-* upgrade to newer web technology that has support for components
+## Share Your Ideas 💡
 
-## bugs & cons :warning:
-* unknown at this point
+We welcome your creative suggestions:
+
+- Explore the possibility of categorizing people by region, relationships, and more.
+
+- Upgrade the project to newer web technologies that support components.
+
+## Reporting Issues and Concerns ⚠️
+
+If you encounter any bugs or have concerns, please feel free to reach out. We're here to address and resolve any issues that may arise.
+
+Thank you for being a part of our historical journey, and let's continue making history together! 🚀📚

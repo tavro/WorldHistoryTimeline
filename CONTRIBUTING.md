@@ -1,28 +1,33 @@
-## contributing
+# Contributing Through Our CMS 🚀
 
-every kind of contribution is highly appreciated no matter how small or big.
+We're thrilled that you want to contribute! Your contributions help make our content more informative, engaging, and up-to-date. Here's how you can get started:
 
-### how to contribute
+## Getting Started
 
-1. fork the repo.
-   * click the fork button located somewhere in the top right corner
-2. implement your contribution.
-   * for beginners i would recommend editing files directly through the UI
-3. submit a pull request against the `master` branch!
-   * GitHub's [official instructions](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) for making pull requests
+1. 🚶‍♂️ Start by navigating to our website and locate the "Contribute" button in the header. It's your gateway to CMS contributions!
 
-i try to keep this project easy to navigate for everyone, not only people
-with programming experience. if you find this project hard or confusing to
-navigate please let me know and i will try to fix it.
+2. 🌟 Click on the "Contribute" button, and you'll be prompted to sign in with your GitHub account. If you don't have one, you can easily create one.
 
-for now the best way to contribute would be to improve and write summaries
-for all decades, you can find all summaries in the 'summaries'-folder. these should
-be fairly easy to understand and edit.
+## Making Your Edits
 
-#### contributing with summaries
+3. ✏️ After signing in, you'll notice new "Edit" and "Add" buttons that magically appear in the necessary locations throughout the content.
 
-i've written a very simple [markup language](https://github.com/tavro/WHT-markup) for making the process of writing summaries a little easier.
+4. 📝 Click on the "Edit" button for the section you'd like to improve. You can make your edits directly in your web browser.
 
-if you want to edit a summary do the following:
-  * go to [WorldHistoryTimeline/summaries/markup/](https://github.com/tavro/WorldHistoryTimeline/tree/main/summaries/markup) and find the file you want to edit
-  * follow the syntax listed in this [file](https://github.com/tavro/WHT-markup/blob/main/README.md)
+5. 💡 If you have entirely new content to add, simply click on the "Add" button and start creating.
+
+6. 📷 If you want to add images or media we've got you covered! Where ever relevant you can use the "Upload Media" option to enhance your contributions visually.
+
+## Submitting Your Changes
+
+7. 🚀 Once you've made your changes, hit the "Submit" button. Your edits will be sent for review.
+
+8. 🕵️ Wes will carefully assess your changes for accuracy and appropriateness. Don't worry; we'll make sure everything aligns with our standards.
+
+9. 🎉 If your edits are approved, they'll be integrated into our content for everyone to benefit from.
+
+## House Rules
+
+🚫 We value the quality and accuracy of our content. Please avoid spammy or incorrect information. Repeated violations of our content guidelines may lead to restrictions on your account.
+
+Let's create an amazing content experience together! Happy contributing! 🌟
