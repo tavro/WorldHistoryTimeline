@@ -55,6 +55,7 @@ def inject_now():
 
 @app.route("/")
 def index():
+
     century_data = DB.century_data.find().sort("century")
     if century_data is None:
         century_data = []

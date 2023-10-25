@@ -934,13 +934,14 @@ input[type="submit"] {
  justify-content: flex-start;
  align-items: center;
  flex-direction: row;
- gap: 20px;
+ gap: 10px;
  flex-wrap: wrap;
  font: inherit;
 }
 
 .metrics-container p {
  margin: 0;
+ margin-right: 50px;
  padding: 0;
  width: max-content;
 }
