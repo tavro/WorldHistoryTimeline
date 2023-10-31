@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <title>World History Timeline</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <script src="/static/js/utils.js" defer></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" defer></script>
+  <link rel="icon" href="/static/images/favicon.svg" />
+ </head>
+ <body> {% include 'header.html' %} <h1 class="contribute-header">System metrics</h1>
+  <div class="metrics-container">
+   <p>
+    <b>Number of users: </b>{{ number_of_users }}
+   </p>
+   <p>
+    <b>Number of contributions: </b>{{ number_of_contributions }}
+   </p>
+  </div>
+  <h1 class="contributions-header">Contributions to review</h1>
+  <div class="contributions-container">
+   <!-- Check if there are no contributions to review --> {% if contributions is none %} <h2 style="margin-left: 30px;margin-top: 10px;margin-bottom: 100vh;">No contributions to review</h2>
+   <!-- Check if there are edits to review --> {% else %} {% for contribution in contributions %} <div class="contribution-admin-page" id="{{ contribution._id }}"> {% if contribution.contribution_type == "edit" %} {% if contribution.data_type != "famous_people" %} <div class="contribution-header">
+     <h3>Edited a {% if contribution.data_type == "famous_people" %}famous person's{% else %} {{contribution.data_type}} {% endif %} summary</h3>
+     <p>
+      <b>ID: </b>{{ contribution._id }}
+     </p>
+    </div>
+    <br>
+    <div class="original-contribution-body">
+     <p>
+      <b>Time period: </b> {{contribution.century}}{% if contribution.decade %}-{{ contribution.decade }}{% endif %}{% if contribution.year %}-{{ contribution.year }}{% endif %}
+     </p>
+     <p>
+      <b>Original Summary: </b>
+     </p>
+     <p>{{ contribution.original_summary }}</p>
+    </div>
+    <div class="updated-contribution-body">
+     <p>
+      <b>Edited Summary: </b>
+     </p>
+     <p>{{ contribution.updated_summary }}</p>
+     <p><b>Sources: </b></p>
+      <ul class="sources-list">
+        {% for source in contribution.updated_sources %}
+        <li class="source-list-item">{{ source }}</li>
+        {% endfor %} 
+      </ul>
+    </div> {% else %} <div class="contribution-header">
+     <h3>Edited a {% if contribution.data_type == "famous_people" %}famous person's{% else %} {{contribution.data_type}} {% endif %} summary</h3>
+     <p>
+      <b>ID: </b>{{ contribution._id }}
+     </p>
+    </div>
+    <br>
+    <div class="contribution-details">
+     <div class="contribution-information">
+      <div class="original-contribution-body">
+       <p>
+        <b>Time period: </b> {{contribution.century}}{% if contribution.decade %}-{{ contribution.decade }}{% endif %}{% if contribution.year %}-{{ contribution.year }}{% endif %}
+       </p>
+       <p>
+        <b>Original Summary: </b>
+       </p>
+       <p>{{ contribution.original_summary }}</p>
+      </div>
+      <div class="updated-contribution-body">
+       <p>
+        <b>Edited Summary: </b>
+       </p>
+       <p>{{ contribution.updated_summary }}</p>
+      </div>
+     </div>
+     <div class="contribution-image">
+      <img src="{{ contribution.image_url }}" alt="Image of famous person" style="width: 100px !important; height: 100px !important;border-radius: 4px !important;">
+     </div>
+    </div> {% endif %} <div class="contribution-footer">
+     <div class="contribution-footer-left">
+      <br>
+      <p>
+       <b>Edited by: </b>
+       <a href="/user/{{ contribution.contributor_id }}">@{{ contribution.contributor }}</a> on {{ contribution.timestamp }}
+      </p>
+     </div>
+     <div class="contribution-footer-right">
+      <button class="contribution-approve-button" onclick="approveContribution('{{ contribution._id }}')">Approve</button>
+      <button class="contribution-reject-button" onclick="rejectContribution('{{ contribution._id }}')">Reject</button>
+      <button class="block-user-button" onclick="blockUser('{{ contribution.contributor_id }}')">Block user</button>
+     </div>
+    </div>
+   </div> {% elif contribution.contribution_type == "add" %} {% if contribution.data_type != "famous_people" %} <div class="contribution-header">
+    <h3>Added a {% if contribution.data_type == "famous_people" %}famous person's{% else %} {{contribution.data_type}} {% endif %} summary</h3>
+    <p>
+     <b>ID: </b>{{ contribution._id }}
+    </p>
+   </div>
+   <br>
+   <div class="original-contribution-body">
+    <p>
+     <b>Time period: </b> {{contribution.century}}{% if contribution.decade %}-{{ contribution.decade }}{% endif %}{% if contribution.year %}-{{ contribution.year }}{% endif %}
+    </p>
+    <p>
+     <b>Summary: </b>
+    </p>
+    <p>{{ contribution.summary }}</p>
+    <p><b>Sources: </b></p>
+      <ul class="sources-list">
+        {% for source in contribution.sources %}
+        <li class="source-list-item">{{ source }}</li>
+        {% endfor %} 
+      </ul>
+   </div> {% else %} <div class="contribution-header">
+    <h3>Added a {% if contribution.data_type == "famous_people" %}famous person's{% else %} {{contribution.data_type}} {% endif %} summary</h3>
+    <p>
+     <b>ID: </b>{{ contribution._id }}
+    </p>
+   </div>
+   <br>
+   <div class="contribution-details">
+    <div class="contribution-information">
+     <div class="original-contribution-body">
+      <p>
+       <b>Time period: </b> {{contribution.century}}{% if contribution.decade %}-{{ contribution.decade }}{% endif %}{% if contribution.year %}-{{ contribution.year }}{% endif %}
+      </p>
+      <p>
+       <b>Summary: </b>
+      </p>
+      <p>{{ contribution.summary }}</p>
+     </div>
+    </div>
+    <div class="contribution-image">
+     <img src="{{ contribution.image_url }}" alt="Image of famous person" style="width: 100px !important; height: 100px !important;border-radius: 4px !important;">
+    </div>
+   </div> {% endif %} <div class="contribution-footer">
+    <div class="contribution-footer-left">
+      <br>
+     <p>
+      <b>Added by: </b>
+      <a href="/user/{{ contribution.contributor_id }}">@{{ contribution.contributor }}</a> on {{ contribution.timestamp }}
+     </p>
+    </div>
+    <div class="contribution-footer-right">
+     <button class="contribution-approve-button" onclick="approveContribution('{{ contribution._id }}')">Approve</button>
+     <button class="contribution-reject-button" onclick="rejectContribution('{{ contribution._id }}')">Reject</button>
+     <button class="block-user-button" onclick="blockUser('{{ contribution.contributor_id }}')">Block user</button>
+    </div>
+   </div>
+  </div> {% endif %} {% endfor %} {% endif %} </div>
+  </div>
+  <div class="timeline-footer-title" id="contribute">
+   <div>
+    <h2>Made by Isak Horvath</h2>
+    <p class="timeline-footer-paragraph"> This is a hobby project developed by one person with little to no free time, if you want to support this or other similar projects please visit this <a href="https://github.com/tavro">GitHub</a> account. </p>
+   </div>
+   <div>
+    <h2>Contribute to the project</h2>
+    <p class="timeline-footer-paragraph"> Please feel free to contribute by fact checking and making the summaries better, you can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project.
+   </div>
+  </div>
+  </div>
+ </body>
+</html>

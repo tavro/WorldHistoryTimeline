@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <title>World History Timeline</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="icon" href="/static/images/favicon.svg" />
+  <script src="/static/js/utils.js" defer></script>
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('form').addEventListener('keypress', function(e) {
+     if (e.key === 'Enter') {
+      e.preventDefault();
+     }
+    });
+   });
+  </script>
+ </head>
+ <body> {% include 'header.html' %} <div class="timeline-wrapper">
+   <h2 class="edit-heading">Editing the summary of <span>{{data.name}}</span>
+   </h2>
+   <div class="image-wrapper">
+    <img class="edit-image" src="{{data.image}}" alt="Image of {{data.name}}">
+   </div>
+   <p class="edit-summary">
+    <b>Original summary: </b>
+    </span>
+   </p>
+   <p id="default-summary" class="original-summary">{{data.summary | safe}}</p>
+   <br>
+   <form id="edit-famous-people-form-summary">
+    <input type="hidden" id="submit-url" value="/edit/famous-people/{{data_id}}">
+    <label for="summary">
+     <b>Edit summary:</b>
+    </label>
+    <br>
+    <div class="summary-input">
+     <textarea class="summary-text-area" id="summary" name="summary" rows="10" cols="50">{{data.summary}}</textarea>
+     <br>
+    </div>
+    <br>
+    <input type="submit" value="Submit For Review" id="submit-button">
+   </form>
+  </div>
+  <div class="timeline-footer-title" id="contribute">
+   <div>
+    <h2>Made by Isak Horvath</h2>
+    <p class="timeline-footer-paragraph"> This is a hobby project developed by one person with little to no free time, if you want to support this or other similar projects please visit this <a href="https://github.com/tavro">GitHub</a> account. </p>
+   </div>
+   <div>
+    <h2>Contribute to the project</h2>
+    <p class="timeline-footer-paragraph"> Please feel free to contribute by fact checking and making the summaries better, you can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project. </p>
+   </div>
+  </div>
+  </div>
+ </body>
+</html>

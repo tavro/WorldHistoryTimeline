@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <title>World History Timeline</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="icon" href="/static/images/favicon.svg" />
+  <script src="/static/js/utils.js" defer></script>
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('form').addEventListener('keypress', function(e) {
+     if (e.key === 'Enter') {
+      e.preventDefault();
+     }
+    });
+   });
+  </script>
+ </head>
+ <body> {% include 'header.html' %} <div class="timeline-wrapper"> {% if data_type != "famous_people" %} <h2 class="edit-heading">Adding new famous person's summary</h2>
+   <br>
+   <div class="add-famous-people-placeholder-image">
+    <img id="image-preview" src="https://cdn.projectrexa.dedyn.io/world-history-timeline/images/silhouette.png" height="172px" width="172px" style="border: 1px solid black;background-color: #f8f8f8;" />
+   </div>
+   <form id="add-form-famous-pople-summary" class="add-famous-people-form" enctype="multipart/form-data">
+    <input type="hidden" id="century" value="{{century}}" />
+    <input type="hidden" id="decade" value="{{decade}}" />
+    <input type="hidden" id="year" value="{{year}}" />
+    <input type="hidden" id="submit-url" value="/add/summary/famous-people?century={{century}}&decade={{decade}}&year={{year}}" />
+    <label for="name">
+     <b>Add name:</b>
+    </label>
+    <br>
+    <input type="text" id="name" name="name" value="{{name}}" placeholder="Albert Einstein" />
+    <br>
+    <label for="lifetime">
+     <b>Add lifetime:</b>
+    </label>
+    <br>
+    <input type="text" id="lifetime" name="lifetime" value="{{lifetime}}" placeholder="1879 AD - 1955 AD (In this format only)" />
+    <br>
+    <label for="image">
+     <b>Add image(.png, .jpg, .jpeg):</b>
+    </label>
+    <br>
+    <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg" />
+    <br>
+    <script>
+     document.querySelector('#image').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) {
+       return;
+      }
+      if (!file.name.match(/\.(png|jpg|jpeg)$/)) {
+       alert('Image must only be of type .png, .jpg, or .jpeg');
+       document.querySelector('#image').value = '';
+       return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(e) {
+       document.querySelector('#image-preview').src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+     });
+    </script>
+    <label for="summary">
+     <b>Add summary:</b>
+    </label>
+    <br>
+    <div class="summary-input">
+     <textarea class="summary-text-area" id="summary" name="summary" rows="10" cols="50" placeholder="Albert Einstein was a German-born theoretical physicist who developed the theory of relativity, one of the two pillars of modern physics (alongside quantum mechanics). His work is also known for its influence on the philosophy of science. He is best known to the general public for his mass-energy equivalence formula E = mc2, which has been dubbed &quot;the world's most famous equation&quot;. He received the 1921 Nobel Prize in Physics &quot;for his services to theoretical physics, and especially for his discovery of the law of the photoelectric effect&quot;, a pivotal step in the development of quantum theory....."></textarea>
+    </div>
+    <br>
+    <input type="submit" value="Submit For Review" id="submit-button" />
+   </form> {% endif %}
+  </div>
+  <div class="timeline-footer-title" id="contribute">
+   <div>
+    <h2>Made by Isak Horvath</h2>
+    <p class="timeline-footer-paragraph"> This is a hobby project developed by one person with little to no free time, if you want to support this or other similar projects please visit this <a href="https://github.com/tavro">GitHub</a> account. </p>
+   </div>
+   <div>
+    <h2>Contribute to the project</h2>
+    <p class="timeline-footer-paragraph"> Please feel free to contribute by fact checking and making the summaries better, you can do this by editing through our <a href="/contribute">CMS</a> or by contributing to our <a href="https://github.com/tavro/WorldHistoryTimeline">GitHub </a>project. </p>
+   </div>
+  </div>
+  </div>
+ </body>
+</html>
