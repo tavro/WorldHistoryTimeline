@@ -28,6 +28,8 @@ We may expand these rules as needed.
 
 We are immensely grateful to the following contributors:
 
+- [Om Mishra](https://github.com/Om-Mishra7)
+  - Added custom CMS
 - [Lolle Dalbo](https://github.com/Skaparen)
   - Added various summaries
   - Enhanced the appearance of the back button
